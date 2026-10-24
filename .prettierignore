@@ -1,0 +1,7 @@
+node_modules
+.next
+cms/media
+cms/src/payload-types.ts
+cms/src/app/(payload)/admin/importMap.js
+web/public
+*.css

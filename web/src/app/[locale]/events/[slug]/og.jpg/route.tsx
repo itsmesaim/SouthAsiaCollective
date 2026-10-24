@@ -1,0 +1,22 @@
+import { getEvent, media } from '@/lib/cms'
+import { dayParts, longDate, t12 } from '@/lib/format'
+import { poster } from '@/lib/poster'
+
+export const revalidate = 300
+
+// 1200x630 link preview (WhatsApp, Facebook, X, LinkedIn...). English + Latin only, see lib/poster.tsx.
+export async function GET(_: Request, { params }: { params: Promise<{ locale: string; slug: string }> }) {
+  const { slug } = await params
+  const e = await getEvent('en', slug)
+  if (!e) return new Response('Not found', { status: 404 })
+  const d = dayParts(e.date, 'en')
+  return poster({
+    kind: 'og',
+    title: e.title,
+    cover: e.cover,
+    tag: 'Event',
+    big: { day: d.day, month: d.month },
+    line1: `${longDate(e.date, 'en')} · ${t12(e.time)}`,
+    line2: e.place,
+  })
+}

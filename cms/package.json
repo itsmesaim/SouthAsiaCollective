@@ -1,0 +1,54 @@
+{
+  "name": "sac-cms",
+  "version": "1.0.0",
+  "description": "A blank template to get started with Payload",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "cross-env NODE_OPTIONS=\"--no-deprecation --max-old-space-size=8000\" payload build",
+    "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+    "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+    "lint": "cross-env NODE_OPTIONS=--no-deprecation eslint .",
+    "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+  },
+  "dependencies": {
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/schibsted-grotesk": "^5.3.0",
+    "@payloadcms/db-mongodb": "3.92.0",
+    "@payloadcms/email-nodemailer": "^3.92.0",
+    "@payloadcms/next": "3.92.0",
+    "@payloadcms/plugin-cloud-storage": "^3.92.0",
+    "@payloadcms/richtext-lexical": "3.92.0",
+    "@payloadcms/ui": "3.92.0",
+    "cloudinary": "^2.11.0",
+    "cross-env": "10.1.0",
+    "graphql": "^16.8.1",
+    "next": "16.4.2",
+    "nodemailer": "^10.2.1",
+    "payload": "3.92.0",
+    "payload-totp": "^3.0.6",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "^9.16.0",
+    "eslint-config-next": "16.4.2",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild",
+      "unrs-resolver"
+    ]
+  }
+}

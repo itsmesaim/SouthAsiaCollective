@@ -1,0 +1,126 @@
+/* ===== South Asia Collective admin skin ===== */
+:root { --sac-orange: #f55600; --sac-green: #006b2e; --font-body: 'Schibsted Grotesk Variable', system-ui, sans-serif; --font-serif: 'Source Serif 4 Variable', Georgia, serif; }
+html[data-theme='dark'] { --theme-bg: #0e0e0e; --theme-elevation-0: #0e0e0e; --theme-elevation-50: #151515; --theme-elevation-100: #1b1b1b; --theme-elevation-150: #222; --theme-elevation-800: #e8e8e8; --theme-elevation-1000: #fff; }
+.btn--style-primary { --bg-color: var(--sac-orange) !important; --color: #fff !important; --hover-bg: #ff6a14 !important; }
+a,
+.nav__link:hover { --theme-link: var(--sac-orange); }
+.nav__link.active,
+.nav__link--active { border-inline-start: 3px solid var(--sac-orange); }
+.nav-group__toggle,
+.nav-group__label { text-transform: uppercase; letter-spacing: 0.12em; font-size: 12px; font-weight: 700; }
+.template-default h1,
+.doc-header__title { font-family: 'Bricolage Grotesque Variable', 'Schibsted Grotesk Variable', sans-serif; font-weight: 800; letter-spacing: -0.01em; }
+
+.sac-welcome { margin-bottom: 28px; padding: 22px 24px; border-radius: 12px; background: var(--theme-elevation-50); border: 1px solid var(--theme-elevation-100); border-inline-start: 6px solid var(--sac-orange); }
+.sac-welcome h2 { margin: 0 0 4px; font-family: 'Bricolage Grotesque Variable', 'Schibsted Grotesk Variable', sans-serif; font-weight: 800; font-size: 34px; letter-spacing: -0.01em; }
+.sac-welcome p { margin: 0 0 16px; opacity: 0.75; }
+.sac-steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.sac-step { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: 10px; background: var(--theme-bg); border: 1px solid var(--theme-elevation-150); text-decoration: none; color: inherit; transition: transform 0.15s, border-color 0.15s; }
+.sac-step:hover { transform: translateY(-2px); border-color: var(--sac-orange); }
+.sac-step strong { font-size: 16px; }
+.sac-step span { font-size: 13px; opacity: 0.7; }
+
+/* ===== sign-in page: protest photo wall behind a centred panel ===== */
+body:has(.template-minimal) { background: #000; }
+body:has(.template-minimal)::before { content: ''; position: fixed; inset: -4%; z-index: 0; transform: rotate(-3deg); background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.8)), linear-gradient(120deg, rgba(245, 86, 0, 0.45), rgba(0, 107, 46, 0.4)), url(/login/photo3.jpg) 0 0 / 50% 50% no-repeat, url(/login/photo1.jpg) 100% 0 / 50% 50% no-repeat, url(/login/photo2.jpg) 0 100% / 50% 50% no-repeat, url(/login/photo4.jpg) 100% 100% / 50% 50% no-repeat; filter: grayscale(1) contrast(1.1); }
+.template-minimal { position: relative; z-index: 1; background: transparent !important; }
+.template-minimal .template-minimal__wrap { background: #f6f5f0; color: #000; padding: 36px 34px 30px; border-radius: 4px; max-width: 460px; width: 100%; box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.65); position: relative; --theme-elevation-0: #f6f5f0; --theme-elevation-800: #111; --theme-elevation-1000: #000; --theme-text: #111; }
+.template-minimal .template-minimal__wrap::before { content: ''; position: absolute; top: -13px; inset-inline-start: 40px; width: 96px; height: 26px; background: rgba(255, 194, 26, 0.92); transform: rotate(-3deg); }
+.template-minimal .template-minimal__wrap input { background: #fffdf5; color: #000; border: 2px solid #000; }
+.template-minimal .template-minimal__wrap label,
+.template-minimal .template-minimal__wrap a { color: #111; }
+.sac-login-hero { text-align: center; margin-bottom: 18px; }
+.sac-login-hero h1 { margin: 0 0 6px; font-family: 'Bricolage Grotesque Variable', 'Schibsted Grotesk Variable', sans-serif; font-weight: 800; font-size: 40px; letter-spacing: -0.01em; }
+.sac-login-hero p { margin: 0 0 14px; opacity: 0.75; }
+.sac-login-site { display: inline-block; padding: 9px 16px; border: 2px solid #000; font-weight: 700; text-decoration: none; background: #ffc21a; color: #000 !important; box-shadow: 3px 3px 0 #000; }
+.sac-login-site:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 #000; }
+
+.sac-actions { display: flex; gap: 8px; align-items: center; margin-inline-end: 8px; }
+.sac-actions a { padding: 7px 12px; border: 2px solid var(--theme-elevation-300, #666); font-weight: 700; font-size: 13px; text-decoration: none; color: inherit; border-radius: 4px; }
+.sac-actions a:hover { background: var(--theme-elevation-100); }
+.sac-actions a.out { background: var(--sac-orange); border-color: var(--sac-orange); color: #fff; }
+
+/* the authenticator QR code: black on white whatever the page colours are (the sign-in skin above recolours the panel) */
+.template-minimal canvas,
+.template-minimal svg[viewBox*='29'],
+.template-minimal [class*='qr'] svg { background: #fff !important; color: #000 !important; fill: #000; padding: 10px; border-radius: 4px; }
+
+/* nicer reading and writing: Schibsted Grotesk everywhere, labels a touch bolder, the post editor in the same serif as the site */
+body,
+input,
+textarea,
+select,
+button { font-family: var(--font-body); }
+.field-label,
+label { font-weight: 600; }
+.rich-text-lexical .ContentEditable__root,
+.rich-text-lexical .editor-scroller { font-family: var(--font-serif); font-size: 18px; line-height: 1.7; }
+.rich-text-lexical h1,
+.rich-text-lexical h2,
+.rich-text-lexical h3 { font-family: 'Bricolage Grotesque Variable', var(--font-body); font-weight: 800; }
+.list-header__title,
+.collection-list h1 { font-family: 'Bricolage Grotesque Variable', var(--font-body); font-weight: 800; }
+.sac-delete { border: 2px solid #c0392b; color: #c0392b; background: transparent; padding: 7px 14px; font: 700 13px var(--font-body); border-radius: 4px; cursor: pointer; }
+.sac-delete:hover { background: #c0392b; color: #fff; }
+.sac-delete[disabled] { opacity: 0.5; cursor: wait; }
+
+/* ===== phones and small tablets: edit from the street ===== */
+@media (max-width: 768px) {
+  input:not([type='checkbox']):not([type='radio']),
+  textarea,
+  select {
+    font-size: 16px !important;
+  } /* stops iOS zooming into fields */
+  .btn,
+  button {
+    min-height: 44px;
+  }
+  .collection-list__wrap,
+  .table-wrap,
+  .table {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+  .doc-controls__controls-wrapper,
+  .doc-controls__wrapper {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .sac-delete {
+    min-height: 44px;
+  }
+  .sac-actions a:not(.out) {
+    display: none;
+  } /* keep Sign out, drop View site to save room */
+  .sac-welcome {
+    padding: 16px;
+  }
+  .sac-welcome h2 {
+    font-size: 28px;
+  }
+  .sac-steps {
+    grid-template-columns: 1fr;
+  }
+  .template-minimal .template-minimal__wrap {
+    padding: 28px 18px 22px;
+    box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.65);
+  }
+  .sac-login-hero h1 {
+    font-size: 32px;
+  }
+  body:has(.template-minimal)::before {
+    inset: -10%;
+    background-size:
+      100% 25%,
+      100% 25%,
+      100% 25%,
+      100% 25%,
+      100% 25%,
+      100% 25%;
+  }
+}
+@media (max-width: 480px) {
+  .template-minimal {
+    padding-inline: 12px;
+  }
+}
