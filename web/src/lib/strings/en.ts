@@ -122,7 +122,7 @@ const en = {
   subscribeBtn: 'Subscribe',
   subscribePending: 'Almost done. We sent you an email: click the link in it to confirm.',
   consentLabel:
-    'I agree to receive emails from South Asia Collective and accept the privacy policy. I can unsubscribe at any time.',
+    'Yes, send me updates from South Asia Collective by email (event announcements, statements and news). I can unsubscribe at any time with the link in every email.',
   consentNeeded: 'Tick the box to subscribe.',
   confirmSubject: 'Confirm your email',
   confirmBody:
