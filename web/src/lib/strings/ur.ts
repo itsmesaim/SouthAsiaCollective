@@ -5,6 +5,7 @@ const ur: Partial<Strings> = {
   // navigation + chrome
   events: 'تقریبات',
   blog: 'بلاگ',
+  news: 'خبریں',
   press: 'پریس',
   statements: 'بیانات',
   speeches: 'تقاریر',

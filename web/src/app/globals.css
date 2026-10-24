@@ -574,3 +574,17 @@ html[lang='ur'] .cut { padding: 0.12em 0.3em 0.34em; }
 .card .cimg { width: calc(100% + 52px); max-width: none; margin: 0 -26px 18px; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 3px solid var(--ink); }
 .card.has-img::before { z-index: 1; }
 .cards { align-items: start; }
+
+/* Urdu (Nastaliq) has tall, hanging letters: give every line room so they never collide or get clipped */
+html[lang='ur']:not([lang='en']):not([lang='ga']) body { font-size: 20px; line-height: 2.1; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) h1, html[lang='ur']:not([lang='en']):not([lang='ga']) h2, html[lang='ur']:not([lang='en']):not([lang='ga']) h3, html[lang='ur']:not([lang='en']):not([lang='ga']) .quote blockquote { line-height: 1.9; padding-block: 0.12em; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) .hero h1 { font-size: clamp(1.9rem, 4.4vw, 3.6rem); line-height: 2.2; gap: 0.5em 0.3em; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) .cut { padding: 0.1em 0.35em 0.45em; line-height: 1.8; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) .tape span, html[lang='ur']:not([lang='en']):not([lang='ga']) .card .when { line-height: 1.9; padding-block: 24px; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) .btn, html[lang='ur']:not([lang='en']):not([lang='ga']) .chip, html[lang='ur']:not([lang='en']):not([lang='ga']) .sticker, html[lang='ur']:not([lang='en']):not([lang='ga']) .pills li { line-height: 1.9; padding-block: 12px; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) .nav a:not(.btn) { line-height: 1.9; padding-block: 8px; }
+html[lang='ur']:not([lang='en']):not([lang='ga']) .note, html[lang='ur']:not([lang='en']):not([lang='ga']) .hero .lead, html[lang='ur']:not([lang='en']):not([lang='ga']) .lead-text { line-height: 2.2; }
+
+/* right-to-left: the strip starts at the right edge, so it has to slide the other way or it leaves a gap */
+@keyframes roll-rtl { to { transform: translateX(50%); } }
+html[dir='rtl'] .tape { animation-name: roll-rtl; }

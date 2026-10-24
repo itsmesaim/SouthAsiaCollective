@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const te: Partial<Strings> = {
   events: 'కార్యక్రమాలు',
   blog: 'బ్లాగ్',
+  news: 'వార్తలు',
   press: 'ప్రెస్',
   statements: 'ప్రకటనలు',
   speeches: 'ప్రసంగాలు',

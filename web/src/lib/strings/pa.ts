@@ -5,6 +5,7 @@ const pa: Partial<Strings> = {
   // navigation + chrome
   events: 'ਸਮਾਗਮ',
   blog: 'ਬਲੌਗ',
+  news: 'ਖ਼ਬਰਾਂ',
   press: 'ਪ੍ਰੈੱਸ',
   statements: 'ਬਿਆਨ',
   speeches: 'ਭਾਸ਼ਣ',

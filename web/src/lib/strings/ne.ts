@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const ne: Partial<Strings> = {
   events: 'कार्यक्रमहरू',
   blog: 'ब्लग',
+  news: 'समाचार',
   press: 'प्रेस',
   statements: 'वक्तव्यहरू',
   speeches: 'भाषणहरू',

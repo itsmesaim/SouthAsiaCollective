@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const hi: Partial<Strings> = {
   events: 'कार्यक्रम',
   blog: 'ब्लॉग',
+  news: 'समाचार',
   press: 'प्रेस',
   statements: 'वक्तव्य',
   speeches: 'भाषण',

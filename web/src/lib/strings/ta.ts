@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const ta: Partial<Strings> = {
   events: 'நிகழ்வுகள்',
   blog: 'வலைப்பதிவு',
+  news: 'செய்திகள்',
   press: 'ஊடகம்',
   statements: 'அறிக்கைகள்',
   speeches: 'உரைகள்',

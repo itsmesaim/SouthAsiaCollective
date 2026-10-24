@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const ga: Partial<Strings> = {
   events: 'Imeachtaí',
   blog: 'Blag',
+  news: 'Nuacht',
   press: 'Preas',
   statements: 'Ráitis',
   speeches: 'Óráidí',

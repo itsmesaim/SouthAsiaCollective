@@ -5,6 +5,7 @@ const bn: Partial<Strings> = {
   // navigation + chrome
   events: 'ইভেন্ট',
   blog: 'ব্লগ',
+  news: 'সংবাদ',
   press: 'সংবাদ',
   statements: 'বিবৃতি',
   speeches: 'বক্তৃতা',

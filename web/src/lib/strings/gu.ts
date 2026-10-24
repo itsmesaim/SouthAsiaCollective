@@ -5,6 +5,7 @@ const gu: Partial<Strings> = {
   // navigation + chrome
   events: 'કાર્યક્રમો',
   blog: 'બ્લોગ',
+  news: 'સમાચાર',
   press: 'પ્રેસ',
   statements: 'નિવેદનો',
   speeches: 'ભાષણો',

@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const ml: Partial<Strings> = {
   events: 'പരിപാടികൾ',
   blog: 'ബ്ലോഗ്',
+  news: 'വാർത്തകൾ',
   press: 'പ്രസ്',
   statements: 'പ്രസ്താവനകൾ',
   speeches: 'പ്രസംഗങ്ങൾ',

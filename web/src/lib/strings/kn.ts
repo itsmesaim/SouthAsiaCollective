@@ -4,6 +4,7 @@ import type { Policy, Strings } from './en'
 const kn: Partial<Strings> = {
   events: 'ಕಾರ್ಯಕ್ರಮಗಳು',
   blog: 'ಬ್ಲಾಗ್',
+  news: 'ಸುದ್ದಿ',
   press: 'ಪ್ರೆಸ್',
   statements: 'ಹೇಳಿಕೆಗಳು',
   speeches: 'ಭಾಷಣಗಳು',

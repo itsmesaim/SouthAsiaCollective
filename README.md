@@ -49,6 +49,7 @@ Everyone is then asked to set up an authenticator app (Microsoft Authenticator, 
 | `CMS_PUBLIC_URL` | public CMS URL (CORS and CSRF allow list) |
 | `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | optional. Empty = images stay on local disk in `cms/media` |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | optional. Empty = confirmation emails are printed in the CMS log |
+| `ANTHROPIC_API_KEY` | optional. Turns on automatic translation of CMS content (see below). Empty = off |
 | `TOTP_DISABLED=1` | emergency switch that turns off two-factor sign in (see "Locked out") |
 
 `web/.env`: `CMS_URL` (server to server, e.g. `http://127.0.0.1:3000`), `CMS_PUBLIC_URL` (browser, for image URLs), `SITE_URL`, `INTERNAL_KEY`.
@@ -70,6 +71,18 @@ Everyone is then asked to set up an authenticator app (Microsoft Authenticator, 
 
 Roles: **admin** (everything), **sub-admin** (content and writers), **writer** (own posts only; the real author is always recorded for the team while readers see a public name chosen in the profile).
 Every edit page has a red Delete button. Drafts are only visible to the team.
+
+## Languages and automatic translation
+
+Write everything in **English** in the admin. When you save, the CMS translates the text into the other 13 languages in the
+background (needs `ANTHROPIC_API_KEY`). It only fills languages that are still empty or still the same as English, so a translation a person
+typed is never overwritten. To redo one, clear that language's field (switch language at the top of the edit page) and save the English again.
+Editing English later does not change existing translations; clear them if you want them redone.
+
+- Translate everything that already exists: `cd cms && npx payload run src/translate-all.ts` (safe to re-run).
+- Machine translation of political text should be read by a native speaker before you rely on it. Editors can fix any language by hand.
+- Fixed site text (menus, buttons) lives in `web/src/lib/strings/<lang>.ts`; a missing key falls back to English. New keys are added to `en.ts` first.
+- Code: `cms/src/translate.ts`, hooks are added to every collection and global in `cms/src/payload.config.ts`.
 
 ## Content rules built in
 

@@ -19,6 +19,7 @@ import { Subscribers } from './collections/Subscribers'
 import { Team } from './collections/Team'
 import { Kits } from './collections/Kits'
 import { Tags } from './collections/Tags'
+import { autoTranslateDoc, autoTranslateGlobal } from './translate'
 import { Timeline } from './collections/Timeline'
 import { Users } from './collections/Users'
 import { cloudinaryAdapter, cloudinaryEnabled, cloudinaryURL } from './cloudinary'
@@ -79,6 +80,7 @@ export default buildConfig({
     Subscribers,
   ].map((c) => ({
     ...c,
+    hooks: { ...c.hooks, afterChange: [...(c.hooks?.afterChange ?? []), autoTranslateDoc] },
     admin: {
       ...c.admin,
       components: {
@@ -87,7 +89,7 @@ export default buildConfig({
       },
     },
   })),
-  globals: [SiteSettings, AboutPage, PressKit],
+  globals: [SiteSettings, AboutPage, PressKit].map((g) => ({ ...g, hooks: { ...g.hooks, afterChange: [...(g.hooks?.afterChange ?? []), autoTranslateGlobal] } })),
   endpoints,
   plugins: [
     // without CLOUDINARY_* env vars the plugin is off and uploads stay on local disk

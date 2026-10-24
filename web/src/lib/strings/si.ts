@@ -5,6 +5,7 @@ const si: Partial<Strings> = {
   // navigation + chrome
   events: 'සිදුවීම්',
   blog: 'බ්ලොග්',
+  news: 'පුවත්',
   press: 'මාධ්‍ය',
   statements: 'ප්‍රකාශ',
   speeches: 'කතා',
