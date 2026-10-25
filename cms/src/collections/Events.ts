@@ -63,7 +63,15 @@ export const Events: CollectionConfig = {
         { name: 'lng', type: 'number', admin: { width: '50%' } },
       ],
     },
-    { name: 'description', type: 'textarea', localized: true },
+    {
+      name: 'description',
+      type: 'textarea',
+      localized: true,
+      admin: {
+        description:
+          'Press Enter for a new line, the site keeps your line breaks (more than one blank line in a row is shortened). Web addresses you paste become clickable links.',
+      },
+    },
     {
       name: 'shareCaption',
       type: 'textarea',

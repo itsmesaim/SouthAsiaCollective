@@ -609,3 +609,4 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
 .doclink strong { font: 800 clamp(1.2rem, 3vw, 1.6rem)/1.15 var(--display); font-stretch: 85%; color: #000; }
 .sheet.packet .prose .doclink a.btn { color: var(--ink); }
 .prose a { overflow-wrap: anywhere; }
+.lead-text a { color: var(--marigold); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }

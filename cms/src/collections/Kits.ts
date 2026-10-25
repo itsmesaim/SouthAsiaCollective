@@ -77,7 +77,7 @@ export const Kits: CollectionConfig = {
       label: 'The press kit (write it here)',
       admin: {
         description:
-          'Blurb, how the day went, individual statements, demands. Headings, bold, colours, images and links all work. Only quote people who agreed.',
+          'Blurb, how the day went, individual statements, demands. Headings, bold, colours, images and links all work. Only quote people who agreed. One Enter starts a new paragraph, so no need to press it twice (extra blank lines are removed on the site). To add a link: select the words, click the chain icon in the toolbar, paste the address. A web address pasted on its own also becomes a link. A Google Doc link on its own line becomes an Open the document button.',
       },
     },
     {

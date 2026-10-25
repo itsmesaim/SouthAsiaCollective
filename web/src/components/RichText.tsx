@@ -25,7 +25,7 @@ function linkHref(n: Doc, l: Locale) {
 
 // bare web addresses typed into the editor become real links (not inside a link that already exists)
 const URL_RE = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)\]])/g
-const linkify = (text: string): ReactNode =>
+export const linkify = (text: string): ReactNode =>
   text.split(URL_RE).map((part, i) =>
     i % 2 ? (
       <a key={i} href={part} target="_blank" rel="noopener noreferrer">
@@ -60,6 +60,9 @@ function Node({ n, l, nolink }: { n: Doc; l: Locale; nolink?: boolean }): ReactN
     case 'linebreak':
       return <br />
     case 'paragraph': {
+      // stacked Enters leave empty paragraphs: they would only add blank space
+      if (!(n.children ?? []).some((c: Doc) => c.type !== 'linebreak' && !(c.type === 'text' && !String(c.text).trim())))
+        return null
       const doc = docLink(n)
       if (doc)
         return (

@@ -70,3 +70,6 @@ export function eventIcs(e: Doc, url: string) {
     'END:VCALENDAR',
   ].join('\r\n')
 }
+
+// editors press Enter many times: drop trailing spaces and keep at most one blank line in a row
+export const tidy = (s: string) => s.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim()

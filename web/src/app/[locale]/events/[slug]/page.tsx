@@ -5,7 +5,8 @@ import { notFound } from 'next/navigation'
 import { JsonLd, eventJsonLd } from '@/components/Blocks'
 import ShareBar from '@/components/ShareBar'
 import { type Doc, SITE, eventSlug, getEvent, media, today } from '@/lib/cms'
-import { dayParts, eventCaption, eventUrl, longDate, t12 } from '@/lib/format'
+import { dayParts, eventCaption, eventUrl, longDate, t12, tidy } from '@/lib/format'
+import { linkify } from '@/components/RichText'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, seoOf } from '@/lib/seo'
 
@@ -98,7 +99,7 @@ export default async function EventPage({ params }: P) {
             </div>
             {e.description && (
               <p className="lead-text" style={{ color: '#ecebe4' }}>
-                {e.description}
+                {linkify(tidy(e.description))}
               </p>
             )}
             {photos.length > 0 && (
