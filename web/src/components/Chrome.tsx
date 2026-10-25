@@ -1,11 +1,9 @@
 import Link from 'next/link'
 
 import { type Doc } from '@/lib/cms'
-import { type Locale, SECTIONS, type Section, tr } from '@/lib/i18n'
+import { type Locale, tr } from '@/lib/i18n'
 import CookieBanner, { CookieSettings } from './CookieBanner'
 import Nav from './Nav'
-
-const sections = Object.keys(SECTIONS) as Section[]
 
 export function Header({ locale, donateOpen }: { locale: Locale; donateOpen: boolean }) {
   const t = tr(locale)
@@ -20,9 +18,13 @@ export function Header({ locale, donateOpen }: { locale: Locale; donateOpen: boo
           menu={t.menu}
           language={t.language}
           items={[
-            { href: `/${locale}/events`, label: t.events },
-            ...sections.map((s) => ({ href: `/${locale}/${s}`, label: t[s] })),
+            { href: `/${locale}`, label: t.home },
             { href: `/${locale}/about`, label: t.about },
+            { href: `/${locale}/events`, label: t.events },
+            { href: `/${locale}/in-the-news`, label: t.news },
+            // blogs, statements and our short updates all live under Blog
+            { href: `/${locale}/blog`, label: t.blog, match: [`/${locale}/blog`, `/${locale}/statements`, `/${locale}/news`] },
+            { href: `/${locale}/gallery`, label: t.gallery },
           ]}
           join={{ href: `/${locale}#join`, label: t.join }}
           donate={donateOpen ? { href: `/${locale}#support`, label: t.donate } : undefined}
@@ -49,11 +51,7 @@ export function Footer({ locale, settings }: { locale: Locale; settings: Doc }) 
           </div>
           <nav aria-label="Footer">
             <Link href={`/${locale}/events`}>{t.events}</Link>
-            {sections.map((s) => (
-              <Link key={s} href={`/${locale}/${s}`}>
-                {t[s]}
-              </Link>
-            ))}
+            <Link href={`/${locale}/blog`}>{t.blog}</Link>
             <Link href={`/${locale}/about`}>{t.about}</Link>
             <Link href={`/${locale}/history`}>{t.historyTitle}</Link>
             <Link href={`/${locale}/gallery`}>{t.galleryTitle}</Link>

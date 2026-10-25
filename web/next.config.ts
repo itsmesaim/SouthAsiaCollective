@@ -15,9 +15,12 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || '.next', // a second dev/test instance can use its own folder
   redirects: async () => [
     { source: '/', destination: '/en', permanent: false },
+    // Blog, News updates and Statements share one list (post pages keep their own URLs)
+    { source: '/:locale/news', destination: '/:locale/blog?type=news', permanent: true },
+    { source: '/:locale/statements', destination: '/:locale/blog?type=statements', permanent: true },
     // the old Press and Speeches sections became News
-    { source: '/:locale/press', destination: '/:locale/news', permanent: true },
-    { source: '/:locale/speeches', destination: '/:locale/news', permanent: true },
+    { source: '/:locale/press', destination: '/:locale/blog?type=news', permanent: true },
+    { source: '/:locale/speeches', destination: '/:locale/blog?type=news', permanent: true },
   ],
 }
 

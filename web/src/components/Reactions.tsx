@@ -13,10 +13,12 @@ export default function Reactions({
   post,
   initial,
   locale,
+  only,
 }: {
   post: string
   initial: Record<string, number>
   locale: Locale
+  only?: string[] // show just these reactions (e.g. statements: like and solidarity)
 }) {
   const t = tr(locale)
   const [counts, setCounts] = useState(initial)
@@ -44,18 +46,20 @@ export default function Reactions({
 
   return (
     <div className="react">
-      {KEYS.map((k, i) => (
-        <button
-          key={k}
-          className={mine === k ? 'on' : ''}
-          disabled={pending}
-          onClick={() => click(k)}
-          aria-pressed={mine === k}
-        >
-          <span aria-hidden>{EMOJI[i]}</span>
-          {t.reactions[i]} <b>{counts[k] ?? 0}</b>
-        </button>
-      ))}
+      {KEYS.map((k, i) =>
+        only && !only.includes(k) ? null : (
+          <button
+            key={k}
+            className={mine === k ? 'on' : ''}
+            disabled={pending}
+            onClick={() => click(k)}
+            aria-pressed={mine === k}
+          >
+            <span aria-hidden>{EMOJI[i]}</span>
+            {t.reactions[i]} <b>{counts[k] ?? 0}</b>
+          </button>
+        ),
+      )}
     </div>
   )
 }

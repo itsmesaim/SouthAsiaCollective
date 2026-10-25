@@ -65,9 +65,10 @@ export default async function PostPage({ params }: P) {
   const tags = ((p.tags ?? []) as Doc[]).filter((g) => typeof g === 'object')
   const sources = ((p.sources ?? []) as Doc[]).filter((x) => x.url)
   const news = p.type === 'news' || p.type === 'statement'
+  const statement = p.type === 'statement'
 
   return (
-    <article className="page">
+    <article className={statement ? 'page statement' : 'page'}>
       <JsonLd
         data={[
           {
@@ -105,6 +106,7 @@ export default async function PostPage({ params }: P) {
           <Link href={`/${locale}/${section}`}>{t[section as Section]}</Link>
         </nav>
         <div className="narrow" style={{ maxWidth: 940 }}>
+          {statement && <span className="sticker saffron">{t.officialStatement}</span>}{' '}
           {p.featured && <span className="sticker">{t.featured}</span>}
           <h1>{p.title}</h1>
           <div className="meta-row">
@@ -115,7 +117,13 @@ export default async function PostPage({ params }: P) {
               </span>
             )}
             <span>{readTime(readingMinutes(p.body), locale)}</span>
+            {statement && (
+              <a className="chip" href="#share">
+                {t.shareStatement}
+              </a>
+            )}
           </div>
+          {statement && p.excerpt && <p className="standfirst">{p.excerpt}</p>}
         </div>
         {img && <img className="cover" src={img} alt={p.cover?.alt ?? ''} />}
         <div className="narrow">
@@ -135,15 +143,22 @@ export default async function PostPage({ params }: P) {
               <Clippings items={sources} />
             </section>
           )}
-          <ShareBar
-            url={url}
-            text={[p.title, p.excerpt, p.authorName && `${t.by} ${p.authorName}`].filter(Boolean).join('\n\n')}
-            title={p.title}
-            image={`/${locale}/${section}/${slug}/story.jpg`}
-            imageName={`${slug}.jpg`}
-            labels={{ ...t, shareTitle: news ? t.shareStatement : t.shareArticle }}
+          <div id="share">
+            <ShareBar
+              url={url}
+              text={[p.title, p.excerpt, p.authorName && `${t.by} ${p.authorName}`].filter(Boolean).join('\n\n')}
+              title={p.title}
+              image={`/${locale}/${section}/${slug}/story.jpg`}
+              imageName={`${slug}.jpg`}
+              labels={{ ...t, shareTitle: news ? t.shareStatement : t.shareArticle }}
+            />
+          </div>
+          <Reactions
+            post={p.id}
+            initial={reactions}
+            locale={locale}
+            only={statement ? ['like', 'solidarity'] : undefined}
           />
-          <Reactions post={p.id} initial={reactions} locale={locale} />
           <div className="cm">
             <h2>{t.comments}</h2>
             {comments.length ? (

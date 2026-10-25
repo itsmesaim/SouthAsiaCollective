@@ -13,8 +13,8 @@ const FORMATS: [number, (c: ReactNode) => ReactNode][] = [
   [16, (c) => <code>{c}</code>],
 ]
 
-const align = (n: Doc) =>
-  ['center', 'right', 'justify'].includes(n.format) ? { textAlign: n.format as 'center' } : undefined
+// "justify" is ignored on purpose: it leaves big gaps between words on phones
+const align = (n: Doc) => (['center', 'right'].includes(n.format) ? { textAlign: n.format as 'center' } : undefined)
 
 function linkHref(n: Doc, l: Locale) {
   const f = n.fields ?? {}
@@ -41,7 +41,10 @@ const DOC_HOST = /^https?:\/\/(docs|drive)\.google\.com\//
 const docLink = (n: Doc): { label: string; url: string } | null => {
   const kids = (n.children ?? []) as Doc[]
   if (!kids.length || !kids.every((c) => c.type === 'text' || c.type === 'linebreak')) return null
-  const text = kids.map((c) => (c.type === 'text' ? c.text : ' ')).join('').trim()
+  const text = kids
+    .map((c) => (c.type === 'text' ? c.text : ' '))
+    .join('')
+    .trim()
   const m = /^(.*?)\s*(https?:\/\/\S+)$/s.exec(text)
   return m && DOC_HOST.test(m[2]) ? { label: m[1].replace(/[:\s]+$/, ''), url: m[2] } : null
 }
@@ -61,7 +64,9 @@ function Node({ n, l, nolink }: { n: Doc; l: Locale; nolink?: boolean }): ReactN
       return <br />
     case 'paragraph': {
       // stacked Enters leave empty paragraphs: they would only add blank space
-      if (!(n.children ?? []).some((c: Doc) => c.type !== 'linebreak' && !(c.type === 'text' && !String(c.text).trim())))
+      if (
+        !(n.children ?? []).some((c: Doc) => c.type !== 'linebreak' && !(c.type === 'text' && !String(c.text).trim()))
+      )
         return null
       const doc = docLink(n)
       if (doc)

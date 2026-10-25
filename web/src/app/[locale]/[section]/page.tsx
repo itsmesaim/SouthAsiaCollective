@@ -10,7 +10,7 @@ import { alts, share } from '@/lib/seo'
 export const revalidate = 60
 type P = {
   params: Promise<{ locale: string; section: string }>
-  searchParams: Promise<{ page?: string; tag?: string }>
+  searchParams: Promise<{ page?: string; tag?: string; type?: string }>
 }
 const keys = Object.keys(SECTIONS) as Section[]
 
@@ -33,8 +33,17 @@ export default async function List({ params, searchParams }: P) {
   const sp = await searchParams
   const page = Math.max(1, Number(sp.page) || 1)
   const tag = sp.tag && /^[\w-]+$/.test(sp.tag) ? sp.tag : undefined
+  // /blog lists every kind of post; ?type= narrows it to one section
+  const only = (section === 'blog' ? (sp.type && sp.type in SECTIONS ? sp.type : undefined) : section) as Section | undefined
+  const link = (o: { type?: string; tag?: string; page?: number }) => {
+    const q = new URLSearchParams()
+    if (o.type) q.set('type', o.type)
+    if (o.tag) q.set('tag', o.tag)
+    if (o.page) q.set('page', String(o.page))
+    return `/${locale}/${section}${q.size ? `?${q}` : ''}`
+  }
   const [{ docs, totalPages }, tags] = await Promise.all([
-    getPosts(locale, { type: SECTIONS[section as Section], page, limit: 12, tag }),
+    getPosts(locale, { type: only && SECTIONS[only], page, limit: 12, tag }),
     getTags(locale),
   ])
   return (
@@ -53,8 +62,11 @@ export default async function List({ params, searchParams }: P) {
           <h1 style={{ fontSize: 'clamp(2.5rem,6.4vw,5rem)' }}>{t[section as Section]}</h1>
         </div>
         <nav className="tabs" aria-label="Sections">
+          <Link href={link({})} aria-current={!only ? 'page' : undefined}>
+            {t.allTags}
+          </Link>
           {keys.map((k) => (
-            <Link key={k} href={`/${locale}/${k}`} aria-current={k === section ? 'page' : undefined}>
+            <Link key={k} href={link({ type: k })} aria-current={k === only ? 'page' : undefined}>
               {t[k]}
             </Link>
           ))}
@@ -63,13 +75,13 @@ export default async function List({ params, searchParams }: P) {
         {tags.length > 0 && (
           <ul className="taglist" aria-label={t.topics}>
             <li>
-              <Link href={`/${locale}/${section}`} aria-current={!tag ? 'page' : undefined}>
+              <Link href={link({ type: only })} aria-current={!tag ? 'page' : undefined}>
                 {t.allTags}
               </Link>
             </li>
             {tags.map((g) => (
               <li key={g.id}>
-                <Link href={`/${locale}/${section}?tag=${g.slug}`} aria-current={tag === g.slug ? 'page' : undefined}>
+                <Link href={link({ type: only, tag: g.slug })} aria-current={tag === g.slug ? 'page' : undefined}>
                   {g.name}
                 </Link>
               </li>
@@ -82,7 +94,7 @@ export default async function List({ params, searchParams }: P) {
             {page > 1 && (
               <Link
                 className="btn paper"
-                href={`/${locale}/${section}?page=${page - 1}${tag ? `&tag=${tag}` : ''}`}
+                href={link({ type: only, tag, page: page - 1 })}
                 rel="prev"
               >
                 ←
@@ -91,7 +103,7 @@ export default async function List({ params, searchParams }: P) {
             {page < totalPages && (
               <Link
                 className="btn paper"
-                href={`/${locale}/${section}?page=${page + 1}${tag ? `&tag=${tag}` : ''}`}
+                href={link({ type: only, tag, page: page + 1 })}
                 rel="next"
               >
                 →

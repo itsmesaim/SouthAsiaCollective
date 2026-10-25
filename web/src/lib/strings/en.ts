@@ -176,10 +176,12 @@ const en = {
   historyBtn: 'See everything we have done',
   galleryTitle: 'Photo gallery',
   galleryBtn: 'See all photos',
+  gallery: 'Gallery',
+  officialStatement: 'Official statement',
   newsBtn: 'See all coverage',
   newsPageTitle: 'In the news',
   blogDesc:
-    'Blog posts from South Asia Collective: reports, explainers and stories from the movement for democracy in South Asia.',
+    'Blogs, news updates and statements from South Asia Collective: reports, explainers and stories from the movement for democracy in South Asia.',
   statementsDesc: 'Official statements from South Asia Collective on democracy, rights and justice in South Asia.',
   notFound: 'Page not found',
   siteDesc:

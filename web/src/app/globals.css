@@ -59,7 +59,9 @@ header.top img.logo { width: 52px; height: 52px; border-radius: 50%; }
 .nav .btn { margin-inline-start: 8px; }
 .chip.burger { display: none; }
 .lang { position: relative; }
-.lang summary { list-style: none; cursor: pointer; padding: 10px 12px; font-weight: 600; border: 2px solid var(--line); display: flex; gap: 8px; align-items: center; }
+.lang { margin-inline-start: 10px; }
+.lang summary { list-style: none; cursor: pointer; padding: 6px 9px; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; border: 1px solid var(--line); display: flex; gap: 5px; align-items: center; }
+.lang summary svg { width: 15px; height: 15px; }
 .lang summary::-webkit-details-marker { display: none; }
 .lang[open] summary { border-color: var(--marigold); }
 .lang ul { list-style: none; padding: 6px; position: absolute; inset-inline-end: 0; top: calc(100% + 6px); background: var(--paper); color: var(--ink); min-width: 190px; max-height: 70vh; overflow: auto; box-shadow: var(--lift); z-index: 70; }
@@ -610,3 +612,19 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
 .sheet.packet .prose .doclink a.btn { color: var(--ink); }
 .prose a { overflow-wrap: anywhere; }
 .lead-text a { color: var(--marigold); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+
+/* ----- reading pages: easier on the eyes, and a formal look for statements ----- */
+.prose { color: #f1f0ea; }
+.prose > p + p { margin-top: 1.3em; }
+.prose > p:first-child::first-letter { font-size: 3.2em; padding: 4px 10px 0 0; }
+@media (max-width: 899px) { .prose > p:first-child::first-letter { all: unset; } }
+.standfirst { margin-top: 22px; max-width: 34em; font: 400 clamp(20px, 2.6vw, 26px)/1.5 var(--serif); color: var(--paper); border-inline-start: 6px solid var(--saffron); padding-inline-start: 20px; }
+.statement .meta-row { font-size: 17px; color: #c9c8bf; }
+.statement .prose > p:first-child::first-letter { all: unset; }
+.statement .prose ol { list-style: none; counter-reset: demand; padding: 0; display: grid; gap: 14px; margin-block: 1.6em; }
+.statement .prose ol > li { counter-increment: demand; position: relative; background: var(--paper); color: var(--ink); padding: 18px 20px 18px 74px; margin: 0; box-shadow: 5px 6px 0 var(--saffron); font-size: 0.95em; line-height: 1.6; }
+.statement .prose ol > li::before { content: counter(demand); position: absolute; inset-inline-start: 18px; top: 12px; font: 800 2.6rem/1 var(--display); color: var(--saffron); }
+.statement .prose ol > li + li { margin-top: 0; }
+.statement .prose ol > li strong { color: #000; }
+.statement .prose ol > li .tc-orange { color: #c24100; }
+@media (max-width: 560px) { .statement .prose ol > li { padding: 16px 16px 16px 58px; } .statement .prose ol > li::before { inset-inline-start: 14px; font-size: 2.2rem; } }
