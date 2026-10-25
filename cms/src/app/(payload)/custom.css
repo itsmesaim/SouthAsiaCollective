@@ -27,6 +27,15 @@ body:has(.template-minimal)::before { content: ''; position: fixed; inset: -4%; 
 .template-minimal .template-minimal__wrap { background: #f6f5f0; color: #000; padding: 36px 34px 30px; border-radius: 4px; max-width: 460px; width: 100%; box-shadow: 8px 10px 0 rgba(0, 0, 0, 0.65); position: relative; --theme-elevation-0: #f6f5f0; --theme-elevation-800: #111; --theme-elevation-1000: #000; --theme-text: #111; }
 .template-minimal .template-minimal__wrap::before { content: ''; position: absolute; top: -13px; inset-inline-start: 40px; width: 96px; height: 26px; background: rgba(255, 194, 26, 0.92); transform: rotate(-3deg); }
 .template-minimal .template-minimal__wrap input { background: #fffdf5; color: #000; border: 2px solid #000; }
+.template-minimal .template-minimal__wrap textarea,
+.template-minimal .template-minimal__wrap .rs__control,
+.template-minimal .template-minimal__wrap .rs__menu { background: #fffdf5; color: #000; border: 2px solid #000; }
+.template-minimal .template-minimal__wrap .rs__single-value,
+.template-minimal .template-minimal__wrap .rs__placeholder,
+.template-minimal .template-minimal__wrap .rs__input-container { color: #000; }
+.template-minimal .template-minimal__wrap .rs__option { background: transparent; color: #000; }
+.template-minimal .template-minimal__wrap .rs__option--is-focused,
+.template-minimal .template-minimal__wrap .rs__option--is-selected { background: #ffc21a; color: #000; }
 .template-minimal .template-minimal__wrap label,
 .template-minimal .template-minimal__wrap a { color: #111; }
 .sac-login-hero { text-align: center; margin-bottom: 18px; }
