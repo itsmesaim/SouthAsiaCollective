@@ -36,8 +36,7 @@ body:has(.template-minimal)::before { content: ''; position: fixed; inset: -4%; 
 .template-minimal .template-minimal__wrap .rs__option { background: transparent; color: #000; }
 .template-minimal .template-minimal__wrap .rs__option--is-focused,
 .template-minimal .template-minimal__wrap .rs__option--is-selected { background: #ffc21a; color: #000; }
-.template-minimal .template-minimal__wrap .upload .btn,
-.template-minimal .template-minimal__wrap .upload .btn span { background: #fffdf5; color: #000; border: 2px solid #000; }
+.template-minimal .template-minimal__wrap .field-type.upload { display: none; } /* the media picker needs a signed-in user, so avatar is added later from the account page */
 .template-minimal .template-minimal__wrap label,
 .template-minimal .template-minimal__wrap a { color: #111; }
 .sac-login-hero { text-align: center; margin-bottom: 18px; }
