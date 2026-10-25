@@ -80,7 +80,7 @@ export default async function PostPage({ params }: P) {
             dateModified: p.updatedAt,
             image: [img ?? `${url}/og.jpg`],
             author: {
-              '@type': p.authorName ? 'Person' : 'Organization',
+              '@type': p.authorName && p.authorName !== 'South Asia Collective' ? 'Person' : 'Organization',
               name: p.authorName || 'South Asia Collective',
             },
             publisher: { '@id': `${SITE}/#org` },

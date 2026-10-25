@@ -43,14 +43,19 @@ export const Posts: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      async ({ data, operation, req }) => {
+      async ({ data, operation, req, originalDoc }) => {
         // who really made it: set once on creation from the signed-in account, never editable
         if (operation === 'create') data.createdBy = req.user?.id
         if (operation === 'create' && !isStaffU(req.user)) data.author = req.user?.id
         if (operation === 'create' && !data.author) data.author = req.user?.id
-        // public visitors can't read users, so keep the display name on the post
-        if (data.author) {
-          const u = await req.payload.findByID({ collection: 'users', id: data.author, depth: 0, overrideAccess: true })
+        // public visitors can't read users, so keep the display name on the post.
+        // "byline": auto = statements are signed by the collective, everything else by the writer
+        const author = data.author ?? originalDoc?.author
+        const type = data.type ?? originalDoc?.type
+        const byline = data.byline ?? originalDoc?.byline ?? 'auto'
+        if (byline === 'collective' || (byline === 'auto' && type === 'statement')) data.authorName = 'South Asia Collective'
+        else if (author) {
+          const u = await req.payload.findByID({ collection: 'users', id: author, depth: 0, overrideAccess: true })
           data.authorName = u.displayName || u.name
         }
         if (data.status === 'published' && !data.publishedAt) data.publishedAt = new Date().toISOString()
@@ -113,6 +118,18 @@ export const Posts: CollectionConfig = {
       relationTo: 'users',
       admin: { position: 'sidebar' },
       access: { update: staffField },
+    },
+    {
+      name: 'byline',
+      type: 'select',
+      defaultValue: 'auto',
+      label: 'Who is named as the author?',
+      options: [
+        { label: 'Automatic: statements say South Asia Collective, other posts name the writer', value: 'auto' },
+        { label: "The writer's public name", value: 'writer' },
+        { label: 'South Asia Collective (hide the writer)', value: 'collective' },
+      ],
+      admin: { position: 'sidebar', description: 'The real writer is still recorded privately for the team.' },
     },
     {
       name: 'authorName',

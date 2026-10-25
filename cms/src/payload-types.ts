@@ -239,6 +239,10 @@ export interface Post {
   publishedAt?: string | null;
   author?: (string | null) | User;
   /**
+   * The real writer is still recorded privately for the team.
+   */
+  byline?: ('auto' | 'writer' | 'collective') | null;
+  /**
    * Shown to readers (the writer's public name)
    */
   authorName?: string | null;
@@ -262,6 +266,9 @@ export interface Post {
    * Required to publish. Landscape photo.
    */
   cover?: (string | null) | Media;
+  /**
+   * One Enter starts a new paragraph, so no need to press it twice (extra blank lines are removed on the site). To add a link: select the words, click the chain icon in the toolbar, paste the address. A web address pasted on its own also becomes a link. A Google Doc link on its own line becomes an Open the document button.
+   */
   body?: {
     root: {
       type: string;
@@ -373,7 +380,7 @@ export interface Kit {
    */
   cover?: (string | null) | Media;
   /**
-   * Blurb, how the day went, individual statements, demands. Headings, bold, colours, images and links all work. Only quote people who agreed.
+   * Blurb, how the day went, individual statements, demands. Headings, bold, colours, images and links all work. Only quote people who agreed. One Enter starts a new paragraph, so no need to press it twice (extra blank lines are removed on the site). To add a link: select the words, click the chain icon in the toolbar, paste the address. A web address pasted on its own also becomes a link. A Google Doc link on its own line becomes an Open the document button.
    */
   packet?: {
     root: {
@@ -461,6 +468,9 @@ export interface Event {
    */
   lat?: number | null;
   lng?: number | null;
+  /**
+   * Press Enter for a new line, the site keeps your line breaks (more than one blank line in a row is shortened). Web addresses you paste become clickable links.
+   */
   description?: string | null;
   /**
    * The text that fills in when someone shares this event (WhatsApp, stories). Keep it punchy.
@@ -787,6 +797,7 @@ export interface PostsSelect<T extends boolean = true> {
   status?: T;
   publishedAt?: T;
   author?: T;
+  byline?: T;
   authorName?: T;
   createdBy?: T;
   featured?: T;
