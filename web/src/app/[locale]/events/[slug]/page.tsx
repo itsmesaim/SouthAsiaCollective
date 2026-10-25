@@ -60,6 +60,12 @@ export default async function EventPage({ params }: P) {
   })
   const over = String(e.date).slice(0, 10) < today()
   const cal = calendarLinks(e, url)
+  // the useful links an editor pasted into the description (tickets, RSVP, group chat) travel with the shared message
+  const caption = eventCaption(e, locale)
+  const links = [...new Set(String(e.description ?? '').match(/https?:\/\/[^\s<>"]+[^\s<>".,;:!?)\]]/g) ?? [])]
+    .filter((l) => !caption.includes(l))
+    .slice(0, 3)
+  const shareText = links.length ? `${caption}\n\n${links.join('\n')}` : caption
 
   return (
     <article className="page">
@@ -151,7 +157,7 @@ export default async function EventPage({ params }: P) {
         {!over && (
           <ShareBar
             url={url}
-            text={eventCaption(e, locale)}
+            text={shareText}
             title={e.title}
             image={`/${locale}/events/${s}/story.jpg`}
             imageName={`${s}-story.jpg`}

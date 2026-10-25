@@ -17,6 +17,7 @@ type Labels = Pick<
   | 'copyLink'
   | 'copied'
   | 'shareStory'
+  | 'storyHint'
   | 'downloadPoster'
   | 'captionLabel'
   | 'copyCaption'
@@ -42,6 +43,7 @@ export default function ShareBar({
   const [caption, setCaption] = useState(text)
   const [canShare, setCanShare] = useState(false)
   const [copied, setCopied] = useState<'link' | 'cap' | null>(null)
+  const [hint, setHint] = useState(false)
   useEffect(() => setCanShare(typeof navigator !== 'undefined' && 'share' in navigator), [])
 
   const both = `${caption}\n${url}`
@@ -53,16 +55,29 @@ export default function ShareBar({
     } catch {}
   }
 
+  // On phones the poster goes along with the caption and link, so apps like WhatsApp get the picture too.
+  // Where the browser cannot send files we share just the text and link.
   const nativeShare = async () => {
     try {
+      if (image) {
+        const blob = await (await fetch(image)).blob()
+        const file = new File([blob], imageName ?? 'poster.jpg', { type: blob.type || 'image/jpeg' })
+        if (navigator.canShare?.({ files: [file] }))
+          return void (await navigator.share({ title, text: both, files: [file] }))
+      }
       await navigator.share({ title, text: caption, url })
     } catch {}
   }
 
   // Instagram has no web share link. On phones the share sheet can take the poster file straight to Stories;
   // elsewhere we download it so it can be added from the app.
+  // Stories cannot carry a clickable link from a website, so the page link is copied first: paste it into a Link sticker.
   const story = async () => {
     if (!image) return
+    try {
+      await navigator.clipboard.writeText(url)
+      setHint(true)
+    } catch {}
     try {
       const blob = await (await fetch(image)).blob()
       const file = new File([blob], imageName ?? 'poster.jpg', { type: 'image/jpeg' })
@@ -99,6 +114,11 @@ export default function ShareBar({
           </button>
         )}
       </div>
+      {hint && (
+        <p className="hint" role="status">
+          {labels.storyHint}
+        </p>
+      )}
       <div className="row">
         <a
           className="chip tg"

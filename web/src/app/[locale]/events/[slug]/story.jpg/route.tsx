@@ -1,5 +1,6 @@
 import { getEvent } from '@/lib/cms'
 import { dayParts, longDate, t12 } from '@/lib/format'
+import { tr } from '@/lib/i18n'
 import { poster } from '@/lib/poster'
 
 export const revalidate = 300
@@ -14,7 +15,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ locale: st
     kind: 'story',
     title: e.title,
     cover: e.cover,
-    tag: 'Event',
+    tag: tr('en').kinds[e.kind] ?? 'Event',
     big: { day: d.day, month: d.month },
     line1: `${longDate(e.date, 'en')} · ${t12(e.time)}`,
     line2: e.place,

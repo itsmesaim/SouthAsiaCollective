@@ -55,6 +55,7 @@ const en = {
   copyLink: 'Copy link',
   copied: 'Copied',
   shareStory: 'Share to Instagram story',
+  storyHint: 'Link copied. In Instagram add a Link sticker and paste it, so people can tap through to this page.',
   downloadPoster: 'Download story poster',
   captionLabel: 'Caption',
   copyCaption: 'Copy caption',
