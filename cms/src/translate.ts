@@ -24,6 +24,16 @@ const NAMES: Record<string, string> = {
 
 const enabled = () => Boolean(process.env.TRANSLATE_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.TRANSLATE_MOCK)
 
+// one line for the startup log, so it is never silently off
+export const translateStatus = () =>
+  process.env.TRANSLATE_MOCK
+    ? 'auto-translation ON (mock, for testing)'
+    : process.env.TRANSLATE_API_KEY
+      ? `auto-translation ON (${process.env.TRANSLATE_API_URL || 'https://api.deepseek.com'}, ${process.env.TRANSLATE_MODEL || 'deepseek-chat'})`
+      : process.env.ANTHROPIC_API_KEY
+        ? 'auto-translation ON (Claude)'
+        : 'auto-translation OFF: set TRANSLATE_API_KEY in cms/.env and restart, then run: npx payload run src/translate-all.ts'
+
 async function translate(texts: string[], code: string): Promise<string[]> {
   if (process.env.TRANSLATE_MOCK) return texts.map((t) => `[${code}] ${t}`)
   const system =
@@ -170,6 +180,7 @@ export async function translateDoc(payload: Payload, target: Target) {
         for (const g of f.fields)
           if ('name' in g && g.name && JSON.stringify(merged[g.name]) !== JSON.stringify(tgt?.[g.name]))
             data[g.name] = merged[g.name]
+    payload.logger.info(`translate: ${'global' in target ? target.global : `${target.collection} ${target.id}`} -> ${code}`)
     const ctx = { skipTranslate: true }
     if (isGlobal)
       await payload.updateGlobal({

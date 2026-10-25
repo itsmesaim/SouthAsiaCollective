@@ -1,5 +1,5 @@
 // npx payload run src/translate-all.ts
-// Translates everything that already exists into the empty languages (needs ANTHROPIC_API_KEY). Safe to re-run.
+// Translates everything that already exists into the empty languages (needs TRANSLATE_API_KEY or ANTHROPIC_API_KEY in cms/.env). Safe to re-run.
 import config from '@payload-config'
 import { getPayload } from 'payload'
 

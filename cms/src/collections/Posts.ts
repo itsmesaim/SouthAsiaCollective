@@ -78,7 +78,7 @@ export const Posts: CollectionConfig = {
       type: 'text',
       required: true,
       localized: true,
-      admin: { description: 'Required. The headline people see.' },
+      admin: { description: 'Required. The headline people see. Write it in English: other languages are filled in automatically after you save.' },
     },
     {
       name: 'slug',

@@ -227,7 +227,7 @@ export interface Post {
   id: string;
   _order?: string | null;
   /**
-   * Required. The headline people see.
+   * Required. The headline people see. Write it in English: other languages are filled in automatically after you save.
    */
   title: string;
   /**

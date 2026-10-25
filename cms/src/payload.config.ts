@@ -19,7 +19,7 @@ import { Subscribers } from './collections/Subscribers'
 import { Team } from './collections/Team'
 import { Kits } from './collections/Kits'
 import { Tags } from './collections/Tags'
-import { autoTranslateDoc, autoTranslateGlobal } from './translate'
+import { autoTranslateDoc, autoTranslateGlobal, translateStatus } from './translate'
 import { Timeline } from './collections/Timeline'
 import { Users } from './collections/Users'
 import { cloudinaryAdapter, cloudinaryEnabled, cloudinaryURL } from './cloudinary'
@@ -117,6 +117,9 @@ export default buildConfig({
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
+  onInit: async (payload) => {
+    payload.logger.info(translateStatus())
+  },
   typescript: { outputFile: path.resolve(dirname, 'payload-types.ts') },
   db: mongooseAdapter({ url: process.env.DATABASE_URL || '' }),
   localization: {
