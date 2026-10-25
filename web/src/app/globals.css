@@ -185,7 +185,7 @@ main > .band:nth-of-type(even):not(.paper):not(.saffron):not(.green) { backgroun
 /* ---------- about teaser + page ---------- */
 .about-grid { display: grid; grid-template-columns: minmax(220px, 380px) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
 .about-grid .badge { width: 100%; aspect-ratio: 1; border-radius: 50%; box-shadow: var(--lift); border: 6px solid var(--ink); transform: rotate(-4deg); }
-.lead-text { font: 400 clamp(19px, 2.2vw, 23px)/1.6 var(--serif); max-width: 40em; }
+.lead-text { white-space: pre-line; font: 400 clamp(19px, 2.2vw, 23px)/1.6 var(--serif); max-width: 40em; }
 .pills { list-style: none; padding: 0; margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
 .pills li { background: var(--ink); color: var(--paper); padding: 10px 18px; font: 800 20px/1.2 var(--display); font-stretch: 85%; transform: rotate(var(--r, 0deg)); }
 .pills li:nth-child(odd) { --r: -1.5deg; }
@@ -588,3 +588,16 @@ html[lang='ur']:not([lang='en']):not([lang='ga']) .note, html[lang='ur']:not([la
 /* right-to-left: the strip starts at the right edge, so it has to slide the other way or it leaves a gap */
 @keyframes roll-rtl { to { transform: translateX(50%); } }
 html[dir='rtl'] .tape { animation-name: roll-rtl; }
+
+/* phones: tighter spacing and none of the effects that make scrolling janky (fixed blend overlay, many tilted layers, blend-mode photos) */
+@media (max-width: 760px) {
+  body::before { display: none; }
+  .band { padding-block: 40px; }
+  .band[style*='padding-top'] { padding-top: 12px !important; } /* sections that continue the one above still need some air under the colour change */
+  .hero { padding-block: 28px 36px; }
+  h2 { font-size: clamp(2rem, 9vw, 2.6rem); }
+  .tickets { gap: 20px; }
+  .cards { gap: 26px; }
+  .card, .ticket, .sheet, .share, .flyer { transform: none !important; }
+  .flyer .pic img, .poster img { mix-blend-mode: normal; }
+}
