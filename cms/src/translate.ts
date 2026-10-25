@@ -29,7 +29,7 @@ export const translateStatus = () =>
   process.env.TRANSLATE_MOCK
     ? 'auto-translation ON (mock, for testing)'
     : process.env.TRANSLATE_API_KEY
-      ? `auto-translation ON (${process.env.TRANSLATE_API_URL || 'https://api.deepseek.com'}, ${process.env.TRANSLATE_MODEL || 'deepseek-chat'})`
+      ? `auto-translation ON (${process.env.TRANSLATE_API_URL || 'https://api.deepseek.com'}, ${process.env.TRANSLATE_MODEL || 'deepseek-flash'})`
       : process.env.ANTHROPIC_API_KEY
         ? 'auto-translation ON (Claude)'
         : 'auto-translation OFF: set TRANSLATE_API_KEY in cms/.env and restart, then run: npx payload run src/translate-all.ts'
@@ -49,7 +49,7 @@ async function translate(texts: string[], code: string): Promise<string[]> {
       method: 'POST',
       headers: { 'content-type': 'application/json', authorization: `Bearer ${process.env.TRANSLATE_API_KEY}` },
       body: JSON.stringify({
-        model: process.env.TRANSLATE_MODEL || 'deepseek-chat',
+        model: process.env.TRANSLATE_MODEL || 'deepseek-flash',
         temperature: 0.2,
         messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
       }),
