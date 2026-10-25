@@ -46,7 +46,13 @@ export const Events: CollectionConfig = {
       type: 'row',
       fields: [
         { name: 'date', type: 'date', required: true, admin: { date: { pickerAppearance: 'dayOnly' }, width: '50%' } },
-        { name: 'time', type: 'text', required: true, admin: { description: '24h, e.g. 16:30', width: '50%' } },
+        {
+          name: 'time',
+          type: 'text',
+          required: true,
+          validate: (v: string | null | undefined) => /^([01]?\d|2[0-3]):[0-5]\d$/.test(v ?? '') || 'Use 24h time like 16:30',
+          admin: { description: '24h, e.g. 16:30', width: '50%' },
+        },
       ],
     },
     { name: 'place', type: 'text', required: true, admin: { description: 'Address people can paste into a map' } },

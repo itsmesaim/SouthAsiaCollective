@@ -249,7 +249,7 @@ a.tm:hover { transform: rotate(0) translateY(-3px); }
 .charge h3 { font-size: clamp(1.7rem, 3.2vw, 2.5rem); color: var(--marigold); padding-inline-start: 12px; }
 .charge p { font: 400 19px/1.65 var(--serif); }
 @media (max-width: 760px) {
-  .charge { grid-template-columns: 1fr; }
+  .charge { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* ---------- support / join / subscribe ---------- */
@@ -411,13 +411,13 @@ html[dir='rtl'] .ticket::after { inset-inline-start: auto; inset-inline-end: 138
   .hero .w,
   .event-hero,
   .about-grid,
-  .give { grid-template-columns: 1fr; }
+  .give { grid-template-columns: minmax(0, 1fr); }
   .collage { max-width: 520px; width: 100%; margin-inline: auto; }
   .flyers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .flyer.lead { grid-column: 1 / -1; }
   .cards,
-  .clips { grid-template-columns: 1fr; }
-  footer.bottom .w { grid-template-columns: 1fr; }
+  .clips { grid-template-columns: minmax(0, 1fr); }
+  footer.bottom .w { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 860px) {
   .chip.burger { display: inline-flex; }
@@ -429,8 +429,8 @@ html[dir='rtl'] .ticket::after { inset-inline-start: auto; inset-inline-end: 138
 }
 @media (max-width: 640px) {
   body { font-size: 17px; }
-  .flyers { grid-template-columns: 1fr; }
-  .flyer.lead { grid-template-columns: 1fr; }
+  .flyers { grid-template-columns: minmax(0, 1fr); }
+  .flyer.lead { grid-template-columns: minmax(0, 1fr); }
   .ticket { grid-template-columns: 96px minmax(0, 1fr); }
   .ticket .stamp b { font-size: 44px; }
   .ticket .stamp span { font-size: 17px; }
@@ -442,9 +442,9 @@ html[dir='rtl'] .ticket::after { inset-inline-start: auto; inset-inline-end: 138
   .cta .btn,
   .join-btns .btn { width: 100%; }
   #ck .w { flex-direction: column; align-items: stretch; gap: 12px; }
-  #ck .w > div:last-child { display: grid; grid-template-columns: 1fr 1fr; }
+  #ck .w > div:last-child { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .share .row .chip { flex: 1 1 140px; justify-content: center; }
-  .kit dl { grid-template-columns: 1fr; }
+  .kit dl { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -486,7 +486,7 @@ html[lang='ur'] .cut { padding: 0.12em 0.3em 0.34em; }
 .gal.strip .pin { margin: 0; flex: 0 0 min(78vw, 360px); scroll-snap-align: start; }
 .pin figcaption { padding: 10px 6px 2px; color: var(--ink); font: 400 15px/1.4 var(--serif); }
 @media (max-width: 700px) {
-  .gal.featured { grid-template-columns: 1fr; }
+  .gal.featured { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* text colours and highlighter pens from the CMS editor */
@@ -563,7 +563,7 @@ html[lang='ur'] .cut { padding: 0.12em 0.3em 0.34em; }
 .kitcard.big .pic { aspect-ratio: auto; min-height: 260px; border-bottom: 0; border-inline-end: 3px solid var(--ink); }
 .kitcard.big h3 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); }
 @media (max-width: 760px) {
-  .kitcard.big { grid-template-columns: 1fr; }
+  .kitcard.big { grid-template-columns: minmax(0, 1fr); }
   .kitcard.big .pic { border-inline-end: 0; border-bottom: 3px solid var(--ink); min-height: 0; aspect-ratio: 16 / 9; }
 }
 .kits { margin-top: 44px; }

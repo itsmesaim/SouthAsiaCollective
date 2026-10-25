@@ -2,9 +2,15 @@ import type { Doc } from './cms'
 import { SITE } from './cms'
 import { type Locale, fill, localeInfo, tr } from './i18n'
 
-export const t12 = (t: string) => {
-  const [h, m] = t.split(':').map(Number)
-  return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`
+// "16:30", "4pm", "4.30 pm" -> "4:30 PM"; anything we cannot read is shown as typed
+export const t12 = (t?: string) => {
+  const m = /^\s*(\d{1,2})(?:[:.](\d{2}))?\s*(am|pm)?\s*$/i.exec(t ?? '')
+  if (!m) return t ?? ''
+  let h = Number(m[1])
+  const ap = m[3]?.toLowerCase()
+  if (ap) h = (h % 12) + (ap === 'pm' ? 12 : 0)
+  if (h > 23) return t ?? ''
+  return `${h % 12 || 12}:${m[2] ?? '00'} ${h < 12 ? 'AM' : 'PM'}`
 }
 
 const noon = (iso: string) => new Date(String(iso).slice(0, 10) + 'T12:00:00Z')
