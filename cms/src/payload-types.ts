@@ -489,6 +489,10 @@ export interface Event {
    */
   slug?: string | null;
   /**
+   * Shown as a small tag above the date on the site.
+   */
+  kind: 'protest' | 'solidarity' | 'fundraiser' | 'event';
+  /**
    * Tick to give this event a gold outline and an "Important" tag on the site
    */
   important?: boolean | null;
@@ -876,6 +880,7 @@ export interface EventsSelect<T extends boolean = true> {
   cover?: T;
   photos?: T;
   slug?: T;
+  kind?: T;
   important?: T;
   status?: T;
   seo?:

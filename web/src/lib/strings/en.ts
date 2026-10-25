@@ -41,6 +41,7 @@ const en = {
   calOutlook: 'Outlook',
   calApple: 'Apple Calendar / other (.ics)',
   important: 'Important',
+  kinds: { protest: 'Protest', solidarity: 'Solidarity', fundraiser: 'Fundraiser', event: 'Event' } as Record<string, string>,
   allEvents: 'All events',
   past: 'This event has already happened.',
   shareTitle: 'Spread the word',

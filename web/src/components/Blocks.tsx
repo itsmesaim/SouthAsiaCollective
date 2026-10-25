@@ -74,10 +74,13 @@ export function EventList({ events, locale }: { events: Doc[]; locale: Locale })
         return (
           <article className={e.important ? 'ticket imp' : 'ticket'} key={e.id}>
             {e.important && <span className="sticker saffron flag">{t.important}</span>}
-            <div className="stamp" aria-hidden="true">
-              <small>{d.weekday}</small>
-              <b>{d.day}</b>
-              <span>{d.month}</span>
+            <div className="stamp">
+              <em className="kind" data-kind={e.kind ?? 'event'}>
+                {t.kinds[e.kind] ?? t.kinds.event}
+              </em>
+              <small aria-hidden="true">{d.weekday}</small>
+              <b aria-hidden="true">{d.day}</b>
+              <span aria-hidden="true">{d.month}</span>
             </div>
             <div className="info">
               <h3>

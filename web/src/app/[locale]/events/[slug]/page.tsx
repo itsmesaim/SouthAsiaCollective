@@ -72,6 +72,9 @@ export default async function EventPage({ params }: P) {
         </nav>
         <div className="event-hero">
           <div>
+            <span className="kind" data-kind={e.kind ?? 'event'}>
+              {t.kinds[e.kind] ?? t.kinds.event}
+            </span>{' '}
             {e.important && <span className="sticker saffron">{t.important}</span>}
             <h1>{e.title}</h1>
             <div className="facts">

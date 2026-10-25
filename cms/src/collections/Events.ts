@@ -105,6 +105,20 @@ export const Events: CollectionConfig = {
       admin: { position: 'sidebar', description: 'Filled in automatically' },
     },
     {
+      name: 'kind',
+      type: 'select',
+      label: 'Type of event',
+      required: true,
+      defaultValue: 'event',
+      options: [
+        { label: 'Protest', value: 'protest' },
+        { label: 'Solidarity', value: 'solidarity' },
+        { label: 'Fundraiser', value: 'fundraiser' },
+        { label: 'Event', value: 'event' },
+      ],
+      admin: { position: 'sidebar', description: 'Shown as a small tag above the date on the site.' },
+    },
+    {
       name: 'important',
       label: 'Important (highlight)',
       type: 'checkbox',

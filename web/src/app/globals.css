@@ -637,3 +637,11 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
 .cal li a { display: block; padding: 11px 12px; font-weight: 700; }
 .cal li a:hover { background: var(--marigold); }
 @media (max-width: 640px) { .cal, .cal summary { width: 100%; } .cal ul { position: static; box-shadow: none; } }
+
+/* event type tag (Protest / Solidarity / Fundraiser / Event) */
+.kind { display: inline-block; font: 800 11px/1 var(--sans); font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 8px; background: var(--paper); color: var(--ink); border: 2px solid var(--ink); }
+.kind[data-kind='protest'] { background: var(--ink); color: var(--paper); border-color: var(--paper); }
+.kind[data-kind='solidarity'] { background: var(--green); color: var(--paper); }
+.kind[data-kind='fundraiser'] { background: var(--marigold); }
+.ticket .stamp .kind { margin-bottom: 10px; max-width: 100%; text-align: center; white-space: nowrap; }
+@media (max-width: 640px) { .ticket .stamp .kind { font-size: 9px; letter-spacing: 0.03em; padding: 4px; } }
