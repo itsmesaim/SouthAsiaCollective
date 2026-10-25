@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 import { CutHeadline, TimelineCard, Gallery, EventList, Flyers, JsonLd, Tapes, eventsJsonLd } from '@/components/Blocks'
 import { SubscribeForm } from '@/components/Forms'
-import { SITE, galleryPhotos, getEvents, getPosts, getSettings, getTimeline, safeUrl } from '@/lib/cms'
+import { SITE, galleryPhotos, getAbout, getEvents, getPosts, getSettings, getTimeline, safeUrl } from '@/lib/cms'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, share } from '@/lib/seo'
 
@@ -27,8 +27,9 @@ export default async function Home({ params }: P) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const t = tr(locale)
-  const [s, events, latest, timeline] = await Promise.all([
+  const [s, about, events, latest, timeline] = await Promise.all([
     getSettings(locale),
+    getAbout(locale),
     getEvents(locale),
     getPosts(locale, { limit: 4 }),
     getTimeline(locale),
@@ -57,7 +58,7 @@ export default async function Home({ params }: P) {
               line1={edited(s.heroTitle1, 'Fighting for democracy.') ?? t.title1}
               line2={edited(s.heroTitle2, 'Standing in solidarity.') ?? t.title2}
             />
-            <p className="lead">{s.heroText || t.heroText}</p>
+            <p className="lead">{(about.intro as string) || s.heroText || t.heroText}</p>
             <div className="cta">
               <a className="btn" href="#events">
                 {t.seeEvents}
