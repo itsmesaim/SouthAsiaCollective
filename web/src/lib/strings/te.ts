@@ -33,6 +33,7 @@ const te: Partial<Strings> = {
   noEvents: 'ప్రస్తుతం కార్యక్రమాలేవీ లేవు. ముందుగా తెలుసుకోవడానికి మా WhatsAppలో చేరండి.',
   directions: 'దారి',
   addToCalendar: 'క్యాలెండర్‌లో చేర్చు',
+  kinds: { protest: 'నిరసన', solidarity: 'సంఘీభావం', fundraiser: 'నిధుల సేకరణ', event: 'కార్యక్రమం' },
   important: 'ముఖ్యం',
   allEvents: 'అన్ని కార్యక్రమాలు',
   past: 'ఈ కార్యక్రమం ఇప్పటికే జరిగిపోయింది.',

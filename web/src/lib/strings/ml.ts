@@ -33,6 +33,7 @@ const ml: Partial<Strings> = {
   noEvents: 'ഇപ്പോൾ പരിപാടികളൊന്നുമില്ല. ആദ്യം അറിയാൻ ഞങ്ങളുടെ WhatsApp-ൽ ചേരൂ.',
   directions: 'വഴി',
   addToCalendar: 'കലണ്ടറിൽ ചേർക്കൂ',
+  kinds: { protest: 'പ്രതിഷേധം', solidarity: 'ഐക്യദാർഢ്യം', fundraiser: 'ധനസമാഹരണം', event: 'പരിപാടി' },
   important: 'പ്രധാനം',
   allEvents: 'എല്ലാ പരിപാടികളും',
   past: 'ഈ പരിപാടി കഴിഞ്ഞുപോയി.',

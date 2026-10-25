@@ -36,6 +36,7 @@ const si: Partial<Strings> = {
   noEvents: 'දැනට සැලසුම් කළ සිදුවීම් නැත. මුලින්ම දැනගැනීමට අපගේ WhatsApp එකට එක්වන්න.',
   directions: 'මාර්ග සැලැස්ම',
   addToCalendar: 'දින දර්ශනයට එක් කරන්න',
+  kinds: { protest: 'විරෝධතාව', solidarity: 'සහයෝගිතාව', fundraiser: 'අරමුදල් රැස්කිරීම', event: 'සිදුවීම' },
   important: 'වැදගත්',
   allEvents: 'සියලු සිදුවීම්',
   past: 'මෙම සිදුවීම දැනටමත් අවසන්.',

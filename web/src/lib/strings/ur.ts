@@ -36,6 +36,7 @@ const ur: Partial<Strings> = {
   noEvents: 'فی الحال کوئی تقریب طے نہیں۔ سب سے پہلے خبر پانے کے لیے ہمارے WhatsApp میں شامل ہوں۔',
   directions: 'راستہ',
   addToCalendar: 'کیلنڈر میں شامل کریں',
+  kinds: { protest: 'احتجاج', solidarity: 'یکجہتی', fundraiser: 'فنڈ ریزنگ', event: 'تقریب' },
   important: 'اہم',
   allEvents: 'تمام تقریبات',
   past: 'یہ تقریب ہو چکی ہے۔',

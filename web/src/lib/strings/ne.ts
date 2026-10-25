@@ -33,6 +33,7 @@ const ne: Partial<Strings> = {
   noEvents: 'अहिले कुनै कार्यक्रम तय भएको छैन। सबैभन्दा पहिले थाहा पाउन हाम्रो WhatsApp मा जोडिनुहोस्।',
   directions: 'बाटो हेर्नुहोस्',
   addToCalendar: 'पात्रोमा थप्नुहोस्',
+  kinds: { protest: 'विरोध', solidarity: 'एकता', fundraiser: 'कोष संकलन', event: 'कार्यक्रम' },
   important: 'महत्त्वपूर्ण',
   allEvents: 'सबै कार्यक्रम',
   past: 'यो कार्यक्रम भइसकेको छ।',

@@ -36,6 +36,7 @@ const bn: Partial<Strings> = {
   noEvents: 'এখন কোনো ইভেন্ট ঠিক হয়নি। সবার আগে জানতে আমাদের WhatsApp-এ যোগ দিন।',
   directions: 'কীভাবে যাবেন',
   addToCalendar: 'ক্যালেন্ডারে যোগ করুন',
+  kinds: { protest: 'প্রতিবাদ', solidarity: 'সংহতি', fundraiser: 'তহবিল সংগ্রহ', event: 'অনুষ্ঠান' },
   important: 'জরুরি',
   allEvents: 'সব ইভেন্ট',
   past: 'এই ইভেন্ট শেষ হয়ে গেছে।',

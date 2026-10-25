@@ -33,6 +33,7 @@ const hi: Partial<Strings> = {
   noEvents: 'अभी कोई कार्यक्रम तय नहीं है। सबसे पहले जानने के लिए हमारे WhatsApp से जुड़ें।',
   directions: 'रास्ता देखें',
   addToCalendar: 'कैलेंडर में जोड़ें',
+  kinds: { protest: 'प्रदर्शन', solidarity: 'एकजुटता', fundraiser: 'धन संग्रह', event: 'कार्यक्रम' },
   important: 'ज़रूरी',
   allEvents: 'सभी कार्यक्रम',
   past: 'यह कार्यक्रम हो चुका है।',

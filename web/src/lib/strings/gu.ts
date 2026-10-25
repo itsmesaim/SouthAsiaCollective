@@ -36,6 +36,7 @@ const gu: Partial<Strings> = {
   noEvents: 'હાલમાં કોઈ કાર્યક્રમ નક્કી નથી. સૌથી પહેલાં જાણવા અમારા WhatsApp સાથે જોડાઓ.',
   directions: 'રસ્તો',
   addToCalendar: 'કેલેન્ડરમાં ઉમેરો',
+  kinds: { protest: 'વિરોધ', solidarity: 'એકતા', fundraiser: 'ભંડોળ એકત્રીકરણ', event: 'કાર્યક્રમ' },
   important: 'મહત્વનું',
   allEvents: 'બધા કાર્યક્રમો',
   past: 'આ કાર્યક્રમ થઈ ચૂક્યો છે.',

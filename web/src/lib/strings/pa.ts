@@ -36,6 +36,7 @@ const pa: Partial<Strings> = {
   noEvents: 'ਹਾਲੇ ਕੋਈ ਸਮਾਗਮ ਤੈਅ ਨਹੀਂ। ਸਭ ਤੋਂ ਪਹਿਲਾਂ ਜਾਣਨ ਲਈ ਸਾਡੇ WhatsApp ਨਾਲ ਜੁੜੋ।',
   directions: 'ਰਸਤਾ',
   addToCalendar: 'ਕੈਲੰਡਰ ਵਿੱਚ ਜੋੜੋ',
+  kinds: { protest: 'ਵਿਰੋਧ', solidarity: 'ਏਕਤਾ', fundraiser: 'ਫੰਡ ਇਕੱਠਾ ਕਰਨਾ', event: 'ਪ੍ਰੋਗਰਾਮ' },
   important: 'ਜ਼ਰੂਰੀ',
   allEvents: 'ਸਾਰੇ ਸਮਾਗਮ',
   past: 'ਇਹ ਸਮਾਗਮ ਹੋ ਚੁੱਕਾ ਹੈ।',

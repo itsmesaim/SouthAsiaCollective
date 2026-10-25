@@ -33,6 +33,7 @@ const ga: Partial<Strings> = {
   noEvents: 'Níl aon imeacht beartaithe faoi láthair. Bí inár WhatsApp chun a bheith ar an eolas ar dtús.',
   directions: 'Treoracha',
   addToCalendar: 'Cuir leis an bhféilire',
+  kinds: { protest: 'Agóid', solidarity: 'Dlúthpháirtíocht', fundraiser: 'Tiomsú airgid', event: 'Imeacht' },
   important: 'Tábhachtach',
   allEvents: 'Gach imeacht',
   past: 'Tharla an t-imeacht seo cheana.',

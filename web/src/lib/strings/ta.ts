@@ -33,6 +33,7 @@ const ta: Partial<Strings> = {
   noEvents: 'இப்போது நிகழ்வுகள் எதுவும் இல்லை. முதலில் அறிய எங்கள் WhatsApp-இல் இணையுங்கள்.',
   directions: 'வழி',
   addToCalendar: 'நாள்காட்டியில் சேர்',
+  kinds: { protest: 'போராட்டம்', solidarity: 'ஒற்றுமை', fundraiser: 'நிதி திரட்டல்', event: 'நிகழ்வு' },
   important: 'முக்கியம்',
   allEvents: 'எல்லா நிகழ்வுகளும்',
   past: 'இந்த நிகழ்வு ஏற்கெனவே நடந்துவிட்டது.',

@@ -33,6 +33,7 @@ const kn: Partial<Strings> = {
   noEvents: 'ಈಗ ಯಾವ ಕಾರ್ಯಕ್ರಮವೂ ಇಲ್ಲ. ಮೊದಲು ತಿಳಿಯಲು ನಮ್ಮ WhatsApp ಸೇರಿ.',
   directions: 'ದಾರಿ',
   addToCalendar: 'ಕ್ಯಾಲೆಂಡರ್‌ಗೆ ಸೇರಿಸಿ',
+  kinds: { protest: 'ಪ್ರತಿಭಟನೆ', solidarity: 'ಒಗ್ಗಟ್ಟು', fundraiser: 'ನಿಧಿ ಸಂಗ್ರಹ', event: 'ಕಾರ್ಯಕ್ರಮ' },
   important: 'ಮುಖ್ಯ',
   allEvents: 'ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮಗಳು',
   past: 'ಈ ಕಾರ್ಯಕ್ರಮ ಈಗಾಗಲೇ ನಡೆದುಹೋಗಿದೆ.',
