@@ -10,7 +10,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ locale: st
   return new Response(eventIcs(e, eventUrl(locale, (e.slug as string) || slug)), {
     headers: {
       'content-type': 'text/calendar; charset=utf-8',
-      'content-disposition': `attachment; filename="${slug}.ics"`,
+      'content-disposition': `inline; filename="${slug}.ics"`,
     },
   })
 }

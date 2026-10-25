@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import { JsonLd, eventJsonLd } from '@/components/Blocks'
 import ShareBar from '@/components/ShareBar'
 import { type Doc, SITE, eventSlug, getEvent, media, today } from '@/lib/cms'
-import { dayParts, eventCaption, eventUrl, longDate, t12, tidy } from '@/lib/format'
+import { calendarLinks, dayParts, eventCaption, eventUrl, longDate, t12, tidy } from '@/lib/format'
 import { linkify } from '@/components/RichText'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, seoOf } from '@/lib/seo'
@@ -59,6 +59,7 @@ export default async function EventPage({ params }: P) {
     return src ? [{ src, alt: (m.alt as string) || '' }] : []
   })
   const over = String(e.date).slice(0, 10) < today()
+  const cal = calendarLinks(e, url)
 
   return (
     <article className="page">
@@ -111,11 +112,24 @@ export default async function EventPage({ params }: P) {
                 ))}
               </div>
             )}
-            <div className="cta" style={{ marginTop: 22 }}>
-              <a className="btn" href={`/${locale}/events/${s}/calendar.ics`}>
-                {t.addToCalendar}
-              </a>
-            </div>
+            <details className="cal">
+              <summary className="btn">{t.addToCalendar}</summary>
+              <ul>
+                <li>
+                  <a href={cal.google} target="_blank" rel="noopener">
+                    {t.calGoogle}
+                  </a>
+                </li>
+                <li>
+                  <a href={cal.outlook} target="_blank" rel="noopener">
+                    {t.calOutlook}
+                  </a>
+                </li>
+                <li>
+                  <a href={`/${locale}/events/${s}/calendar.ics`}>{t.calApple}</a>
+                </li>
+              </ul>
+            </details>
             {over && (
               <p className="msg" style={{ marginTop: 18, display: 'inline-block' }}>
                 {t.past}

@@ -628,3 +628,12 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
 .statement .prose ol > li strong { color: #000; }
 .statement .prose ol > li .tc-orange { color: #c24100; }
 @media (max-width: 560px) { .statement .prose ol > li { padding: 16px 16px 16px 58px; } .statement .prose ol > li::before { inset-inline-start: 14px; font-size: 2.2rem; } }
+
+/* add to calendar: a small menu under the button */
+.cal { position: relative; display: inline-block; margin-top: 22px; }
+.cal summary { list-style: none; cursor: pointer; }
+.cal summary::-webkit-details-marker { display: none; }
+.cal ul { list-style: none; padding: 6px; margin-top: 8px; background: var(--paper); color: var(--ink); box-shadow: 4px 5px 0 var(--saffron); min-width: 250px; position: absolute; z-index: 5; inset-inline-start: 0; }
+.cal li a { display: block; padding: 11px 12px; font-weight: 700; }
+.cal li a:hover { background: var(--marigold); }
+@media (max-width: 640px) { .cal, .cal summary { width: 100%; } .cal ul { position: static; box-shadow: none; } }
