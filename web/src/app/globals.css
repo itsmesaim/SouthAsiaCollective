@@ -646,3 +646,9 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
 .ticket .stamp .kind { margin-bottom: 10px; max-width: 100%; text-align: center; }
 html:not([lang='en']):not([lang='ga']) .kind { letter-spacing: 0; text-transform: none; font-size: 12px; line-height: 1.3; }
 @media (max-width: 640px) { .ticket .stamp .kind { font-size: 9px; letter-spacing: 0.03em; padding: 4px; } html:not([lang='en']):not([lang='ga']) .ticket .stamp .kind { font-size: 10px; } }
+
+/* site name next to the logo */
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand span { font: 800 clamp(1.05rem, 2.6vw, 1.35rem)/1.1 var(--display); font-stretch: 85%; letter-spacing: -0.01em; white-space: nowrap; }
+@media (max-width: 400px) { .brand { gap: 8px; } .brand span { font-size: 0.98rem; } }
+@media (min-width: 861px) and (max-width: 1159px) { .brand span { display: none; } } /* the full menu needs the room */

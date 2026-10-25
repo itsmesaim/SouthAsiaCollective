@@ -10,8 +10,9 @@ export function Header({ locale, donateOpen }: { locale: Locale; donateOpen: boo
   return (
     <header className="top">
       <div className="w">
-        <Link href={`/${locale}`} aria-label="South Asia Collective">
-          <img className="logo" src="/logo.png" alt="South Asia Collective" width={52} height={52} />
+        <Link className="brand" href={`/${locale}`} aria-label="South Asia Collective">
+          <img className="logo" src="/logo.png" alt="" width={52} height={52} />
+          <span>SouthAsiaCollective.ie</span>
         </Link>
         <Nav
           locale={locale}
