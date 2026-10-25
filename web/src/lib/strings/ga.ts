@@ -24,7 +24,7 @@ const ga: Partial<Strings> = {
   title1: 'Ag troid ar son an daonlathais.',
   title2: 'Inár seasamh le chéile.',
   heroText:
-    'Is Deisceart na hÁise agus comhghuaillithe muid atá ag cur fúinn in Éirinn. Seasaimid ar son cearta daonlathacha, dínit an duine agus ceartais sa bhaile, agus déanaimid é ar shráideanna Bhaile Átha Cliath.',
+    'Grúpa de bhaill dhul chun cinn den diaspóra agus de chomhghuaillithe atá lonnaithe in Éirinn. Táimid go láidir in aghaidh an fhaisisteachais, an chaitheachais agus sáruithe ar chearta daonna, agus tá cúram mór orainn faoi ghluaiseachtaí faoi stiúir an aosa óig agus gluaiseachtaí pobail ar fud na réigiúin a thacú.',
   seeEvents: 'Féach ar na himeachtaí atá le teacht',
   joinMovement: 'Bí sa ghluaiseacht',
   ticker: ['Daonlathas', 'Dlúthpháirtíocht', 'Ceartas', 'Dínit', 'Comhionannas'],
