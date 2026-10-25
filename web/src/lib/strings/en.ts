@@ -26,7 +26,7 @@ const en = {
   title1: 'Fighting for democracy.',
   title2: 'Standing in solidarity.',
   heroText:
-    'We are South Asians and allies living in Ireland. We stand up for democratic rights, human dignity and justice back home, and we do it on the streets of Dublin.',
+    'A group of progressive diaspora members and allies based in Ireland. We stand firmly against fascism, casteism, and human rights violations, and care deeply about supporting youth-led and grassroots movements across the region.',
   seeEvents: 'See upcoming events',
   joinMovement: 'Join the movement',
   ticker: ['Democracy', 'Solidarity', 'Justice', 'Dignity', 'Equality'],
