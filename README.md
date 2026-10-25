@@ -49,7 +49,7 @@ Everyone is then asked to set up an authenticator app (Microsoft Authenticator, 
 | `CMS_PUBLIC_URL` | public CMS URL (CORS and CSRF allow list) |
 | `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | optional. Empty = images stay on local disk in `cms/media` |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM` | optional. Empty = confirmation emails are printed in the CMS log |
-| `ANTHROPIC_API_KEY` | optional. Turns on automatic translation of CMS content (see below). Empty = off |
+| `TRANSLATE_API_KEY`, `TRANSLATE_API_URL`, `TRANSLATE_MODEL` | optional. Any OpenAI-compatible API (DeepSeek default; Mistral: `https://api.mistral.ai/v1`, `mistral-large-latest`). `ANTHROPIC_API_KEY` also works. Turns on automatic translation of CMS content (see below). Empty = off |
 | `TOTP_DISABLED=1` | emergency switch that turns off two-factor sign in (see "Locked out") |
 
 `web/.env`: `CMS_URL` (server to server, e.g. `http://127.0.0.1:3000`), `CMS_PUBLIC_URL` (browser, for image URLs), `SITE_URL`, `INTERNAL_KEY`.

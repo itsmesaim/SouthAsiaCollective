@@ -4,7 +4,7 @@ import { LOCALE_CODES } from './locales'
 
 // Fills EMPTY translations from the English text, in the background, after an editor saves in English.
 // A translation someone typed is never overwritten. To redo one, clear that field and save the English again.
-// Needs ANTHROPIC_API_KEY in cms/.env; without it nothing happens. TRANSLATE_MOCK=1 prefixes text with [code] for testing.
+// Needs TRANSLATE_API_KEY (DeepSeek/Mistral/any OpenAI-compatible) or ANTHROPIC_API_KEY in cms/.env; without it nothing happens. TRANSLATE_MOCK=1 prefixes text with [code] for testing.
 
 const NAMES: Record<string, string> = {
   ga: 'Irish',
@@ -22,29 +22,44 @@ const NAMES: Record<string, string> = {
   si: 'Sinhala',
 }
 
-const enabled = () => Boolean(process.env.ANTHROPIC_API_KEY || process.env.TRANSLATE_MOCK)
+const enabled = () => Boolean(process.env.TRANSLATE_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.TRANSLATE_MOCK)
 
 async function translate(texts: string[], code: string): Promise<string[]> {
   if (process.env.TRANSLATE_MOCK) return texts.map((t) => `[${code}] ${t}`)
-  const res = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': process.env.ANTHROPIC_API_KEY!,
-      'anthropic-version': '2023-06-01',
-    },
-    body: JSON.stringify({
-      model: 'claude-haiku-5-5',
-      max_tokens: 16000,
-      system:
-        `You translate website text for a human rights group into ${NAMES[code]}. Translate faithfully and neutrally, keep the tone, ` +
-        'names, numbers, URLs and hashtags unchanged, add nothing. The user message is a JSON array of strings. ' +
-        'Reply with ONLY a JSON array of the same length with the translations in the same order.',
-      messages: [{ role: 'user', content: JSON.stringify(texts) }],
-    }),
-  })
-  if (!res.ok) throw new Error(`translate ${code}: ${res.status} ${await res.text()}`)
-  const out = JSON.parse(((await res.json()) as { content: { text: string }[] }).content[0].text)
+  const system =
+    `You translate website text for a human rights group into ${NAMES[code]}. Translate faithfully and neutrally, keep the tone, ` +
+    'names, numbers, URLs and hashtags unchanged, add nothing. The user message is a JSON array of strings. ' +
+    'Reply with ONLY a JSON array of the same length with the translations in the same order.'
+  const user = JSON.stringify(texts)
+  let reply: string
+  if (process.env.TRANSLATE_API_KEY) {
+    // any OpenAI-compatible API: DeepSeek (default), Mistral (https://api.mistral.ai/v1 + mistral-large-latest), ...
+    const base = process.env.TRANSLATE_API_URL || 'https://api.deepseek.com'
+    const res = await fetch(`${base}/chat/completions`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${process.env.TRANSLATE_API_KEY}` },
+      body: JSON.stringify({
+        model: process.env.TRANSLATE_MODEL || 'deepseek-chat',
+        temperature: 0.2,
+        messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
+      }),
+    })
+    if (!res.ok) throw new Error(`translate ${code}: ${res.status} ${await res.text()}`)
+    reply = ((await res.json()) as { choices: { message: { content: string } }[] }).choices[0].message.content
+  } else {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY!,
+        'anthropic-version': '2023-06-01',
+      },
+      body: JSON.stringify({ model: 'claude-haiku-5-5', max_tokens: 16000, system, messages: [{ role: 'user', content: user }] }),
+    })
+    if (!res.ok) throw new Error(`translate ${code}: ${res.status} ${await res.text()}`)
+    reply = ((await res.json()) as { content: { text: string }[] }).content[0].text
+  }
+  const out = JSON.parse(reply.replace(/^\s*```(?:json)?\s*|\s*```\s*$/g, '')) // some models wrap the array in a code fence
   if (!Array.isArray(out) || out.length !== texts.length) throw new Error(`translate ${code}: bad reply`)
   return out.map(String)
 }
