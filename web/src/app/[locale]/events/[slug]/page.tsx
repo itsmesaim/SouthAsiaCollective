@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 import { JsonLd, eventJsonLd } from '@/components/Blocks'
 import ShareBar from '@/components/ShareBar'
-import { SITE, eventSlug, getEvent, media, today } from '@/lib/cms'
+import { type Doc, SITE, eventSlug, getEvent, media, today } from '@/lib/cms'
 import { dayParts, eventCaption, eventUrl, longDate, t12 } from '@/lib/format'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, seoOf } from '@/lib/seo'
@@ -53,6 +53,10 @@ export default async function EventPage({ params }: P) {
   const url = eventUrl(locale, s)
   const d = dayParts(e.date, locale)
   const cover = media(e.cover)
+  const photos = ((e.photos as Doc[] | undefined) ?? []).flatMap((m) => {
+    const src = media(m)
+    return src ? [{ src, alt: (m.alt as string) || '' }] : []
+  })
   const over = String(e.date).slice(0, 10) < today()
 
   return (
@@ -96,6 +100,15 @@ export default async function EventPage({ params }: P) {
               <p className="lead-text" style={{ color: '#ecebe4' }}>
                 {e.description}
               </p>
+            )}
+            {photos.length > 0 && (
+              <div className="event-photos">
+                {photos.map((p) => (
+                  <a href={p.src} target="_blank" rel="noopener" key={p.src}>
+                    <img src={p.src} alt={p.alt} loading="lazy" />
+                  </a>
+                ))}
+              </div>
             )}
             <div className="cta" style={{ marginTop: 22 }}>
               <a className="btn" href={`/${locale}/events/${s}/calendar.ics`}>

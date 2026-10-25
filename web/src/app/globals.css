@@ -601,3 +601,5 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
   .card, .ticket, .sheet, .share, .flyer { transform: none !important; }
   .flyer .pic img, .poster img { mix-blend-mode: normal; }
 }
+.event-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 10px; margin-top: 22px; }
+.event-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 2px solid var(--paper); }

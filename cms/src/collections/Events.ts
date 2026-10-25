@@ -83,6 +83,13 @@ export const Events: CollectionConfig = {
       },
     },
     {
+      name: 'photos',
+      type: 'upload',
+      relationTo: 'media',
+      hasMany: true,
+      admin: { description: 'More photos, shown on the event page under the description. Add as many as you like.' },
+    },
+    {
       name: 'slug',
       type: 'text',
       unique: true,

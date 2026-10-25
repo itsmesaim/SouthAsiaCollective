@@ -471,6 +471,10 @@ export interface Event {
    */
   cover?: (string | null) | Media;
   /**
+   * More photos, shown on the event page under the description. Add as many as you like.
+   */
+  photos?: (string | Media)[] | null;
+  /**
    * Filled in automatically
    */
   slug?: string | null;
@@ -859,6 +863,7 @@ export interface EventsSelect<T extends boolean = true> {
   description?: T;
   shareCaption?: T;
   cover?: T;
+  photos?: T;
   slug?: T;
   important?: T;
   status?: T;

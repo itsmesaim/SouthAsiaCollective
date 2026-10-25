@@ -37,7 +37,7 @@ export default buildConfig({
   maxDepth: 3, // deep populate requests are a cheap way to slow a server down
   cors: origins,
   csrf: origins,
-  upload: { limits: { fileSize: 8_000_000 } },
+  upload: { limits: { fileSize: 25_000_000 } },
   admin: {
     user: Users.slug,
     importMap: { baseDir: path.resolve(dirname) },
