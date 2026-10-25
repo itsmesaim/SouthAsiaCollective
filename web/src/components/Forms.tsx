@@ -18,7 +18,7 @@ export function SubscribeForm({ locale }: { locale: Locale }) {
     <form action={act} className="sub-row">
       <input type="hidden" name="locale" value={locale} />
       {hp}
-      <input type="hidden" name="consentText" value={t.consentLabel} />
+      <input type="hidden" name="consentText" value={`${t.consentLabel} ${t.unsubNote}`} />
       <input type="hidden" name="subject" value={t.confirmSubject} />
       <input type="hidden" name="mail" value={t.confirmBody} />
       <input type="email" name="email" required placeholder={t.emailPlaceholder} aria-label={t.emailPlaceholder} />
@@ -31,6 +31,7 @@ export function SubscribeForm({ locale }: { locale: Locale }) {
           {t.consentLabel} (<Link href={`/${locale}/privacy`}>{t.privacy}</Link>)
         </span>
       </label>
+      <p className="note-s">{t.unsubNote}</p>
       {s && <p className="msg">{s === 'limit' ? t.tooMany : s === 'consent' ? t.consentNeeded : t.errorGeneric}</p>}
     </form>
   )

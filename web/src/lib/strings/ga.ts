@@ -111,7 +111,8 @@ const ga: Partial<Strings> = {
   subscribeBtn: 'Liostáil',
   subscribePending: 'Beagnach déanta. Sheolamar ríomhphost chugat: cliceáil an nasc ann chun deimhniú.',
   consentLabel:
-    'Tá, seol nuashonruithe chugam ó South Asia Collective trí ríomhphost (fógraí imeachtaí, ráitis agus nuacht). Is féidir liom díchlárú am ar bith leis an nasc i ngach ríomhphost.',
+    'Tá, seol nuashonruithe chugam ó South Asia Collective trí ríomhphost (fógraí imeachtaí, ráitis agus nuacht).',
+  unsubNote: 'Is féidir leat díchlárú am ar bith leis an nasc i ngach ríomhphost.',
   consentNeeded: 'Cuir tic sa bhosca chun liostáil.',
   confirmSubject: 'Deimhnigh do ríomhphost',
   confirmBody:
