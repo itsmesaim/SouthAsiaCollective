@@ -603,3 +603,9 @@ html[dir='rtl'] .tape { animation-name: roll-rtl; }
 }
 .event-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 10px; margin-top: 22px; }
 .event-photos img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 2px solid var(--paper); }
+.doclink { display: flex; gap: 18px; align-items: center; margin: 1.2em 0; padding: 20px 22px; background: #fffdf5; border: 2px solid var(--ink); border-inline-start: 8px solid var(--saffron); box-shadow: 5px 6px 0 var(--ink); }
+.doclink svg { width: 44px; height: 44px; color: var(--saffron); }
+.doclink > div { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; min-width: 0; }
+.doclink strong { font: 800 clamp(1.2rem, 3vw, 1.6rem)/1.15 var(--display); font-stretch: 85%; color: #000; }
+.sheet.packet .prose .doclink a.btn { color: var(--ink); }
+.prose a { overflow-wrap: anywhere; }

@@ -35,6 +35,7 @@ const en = {
   upcoming: 'Upcoming events',
   noEvents: 'No events planned right now. Join our WhatsApp to hear first.',
   directions: 'Directions',
+  openDoc: 'Open the full document',
   addToCalendar: 'Add to calendar',
   important: 'Important',
   allEvents: 'All events',

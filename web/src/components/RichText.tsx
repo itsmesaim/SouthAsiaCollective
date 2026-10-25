@@ -23,18 +23,60 @@ function linkHref(n: Doc, l: Locale) {
   return f.url ?? '#'
 }
 
-function Node({ n, l }: { n: Doc; l: Locale }): ReactNode {
-  const kids = (n.children ?? []).map((c: Doc, i: number) => <Node key={i} n={c} l={l} />)
+// bare web addresses typed into the editor become real links (not inside a link that already exists)
+const URL_RE = /(https?:\/\/[^\s<>"]+[^\s<>".,;:!?)\]])/g
+const linkify = (text: string): ReactNode =>
+  text.split(URL_RE).map((part, i) =>
+    i % 2 ? (
+      <a key={i} href={part} target="_blank" rel="noopener noreferrer">
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  )
+
+// a paragraph that is only "some words: https://docs.google.com/..." becomes a button card
+const DOC_HOST = /^https?:\/\/(docs|drive)\.google\.com\//
+const docLink = (n: Doc): { label: string; url: string } | null => {
+  const kids = (n.children ?? []) as Doc[]
+  if (!kids.length || !kids.every((c) => c.type === 'text' || c.type === 'linebreak')) return null
+  const text = kids.map((c) => (c.type === 'text' ? c.text : ' ')).join('').trim()
+  const m = /^(.*?)\s*(https?:\/\/\S+)$/s.exec(text)
+  return m && DOC_HOST.test(m[2]) ? { label: m[1].replace(/[:\s]+$/, ''), url: m[2] } : null
+}
+
+function Node({ n, l, nolink }: { n: Doc; l: Locale; nolink?: boolean }): ReactNode {
+  const kids = (n.children ?? []).map((c: Doc, i: number) => <Node key={i} n={c} l={l} nolink={nolink} />)
   switch (n.type) {
     case 'text': {
-      const inner = FORMATS.reduce<ReactNode>((acc, [bit, wrap]) => (n.format & bit ? wrap(acc) : acc), n.text)
+      const inner = FORMATS.reduce<ReactNode>(
+        (acc, [bit, wrap]) => (n.format & bit ? wrap(acc) : acc),
+        nolink ? n.text : linkify(n.text),
+      )
       const c = n.$?.color
       return typeof c === 'string' && /^[a-z-]+$/.test(c) ? <span className={`tc-${c}`}>{inner}</span> : inner
     }
     case 'linebreak':
       return <br />
-    case 'paragraph':
+    case 'paragraph': {
+      const doc = docLink(n)
+      if (doc)
+        return (
+          <div className="doclink">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 3h9l5 5v13H6zM14 3v6h6M9 13h8M9 17h8" />
+            </svg>
+            <div>
+              {doc.label && <strong>{doc.label}</strong>}
+              <a className="btn small" href={doc.url} target="_blank" rel="noopener noreferrer">
+                {tr(l).openDoc}
+              </a>
+            </div>
+          </div>
+        )
       return <p style={align(n)}>{kids}</p>
+    }
     case 'heading': {
       const H = (n.tag === 'h3' || n.tag === 'h4' ? 'h3' : 'h2') as 'h2' | 'h3'
       return <H style={align(n)}>{kids}</H>
@@ -50,7 +92,9 @@ function Node({ n, l }: { n: Doc; l: Locale }): ReactNode {
       const ext = f.linkType !== 'internal'
       return (
         <a href={linkHref(n, l)} {...(f.newTab || ext ? { target: '_blank', rel: 'noopener' } : {})}>
-          {kids}
+          {(n.children ?? []).map((c: Doc, i: number) => (
+            <Node key={i} n={c} l={l} nolink />
+          ))}
         </a>
       )
     }
