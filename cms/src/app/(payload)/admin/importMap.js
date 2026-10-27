@@ -34,10 +34,14 @@ import { TOTPProvider as TOTPProvider_4eaf6cb33cfb75be01716613e3c9a512 } from 'p
 import { TOTPSetup as TOTPSetup_4eaf6cb33cfb75be01716613e3c9a512 } from 'payload-totp/rsc'
 import { TOTPVerify as TOTPVerify_4eaf6cb33cfb75be01716613e3c9a512 } from 'payload-totp/rsc'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { PostGuide as PostGuide_w1 } from '../../../admin/WritingGuide'
+import { TeamGuide as TeamGuide_w1 } from '../../../admin/WritingGuide'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
   "payload-totp/rsc#TOTPField": TOTPField_4eaf6cb33cfb75be01716613e3c9a512,
+  "/admin/WritingGuide#PostGuide": PostGuide_w1,
+  "/admin/WritingGuide#TeamGuide": TeamGuide_w1,
   "/admin/DeleteButton#DeleteButton": DeleteButton_7acefe8b91a357448e8957e1a31ee1c0,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,

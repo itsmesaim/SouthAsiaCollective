@@ -552,12 +552,32 @@ export interface Team {
   name: string;
   role?: string | null;
   photo?: (string | null) | Media;
+  /**
+   * One or two lines shown on the About page card. Leave empty to use the start of the full bio.
+   */
+  summary?: string | null;
+  /**
+   * Full details, shown on the person's own page.
+   */
   bio?: string | null;
   badges?: (string | Badge)[] | null;
   /**
-   * Optional website or social profile, e.g. instagram.com/name (https:// is added for you)
+   * Optional website, e.g. saimjs.com (https:// is added for you). More accounts go in Social links.
    */
   link?: string | null;
+  /**
+   * LinkedIn, Instagram, Facebook, Fiverr and so on. Shown as buttons on the person's page.
+   */
+  links?:
+    | {
+        kind: 'website' | 'linkedin' | 'instagram' | 'facebook' | 'x' | 'youtube' | 'tiktok' | 'github' | 'fiverr' | 'other';
+        /**
+         * e.g. linkedin.com/in/name (https:// is added for you)
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -931,9 +951,17 @@ export interface TeamSelect<T extends boolean = true> {
   name?: T;
   role?: T;
   photo?: T;
+  summary?: T;
   bio?: T;
   badges?: T;
   link?: T;
+  links?:
+    | T
+    | {
+        kind?: T;
+        url?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

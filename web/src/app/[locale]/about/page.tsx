@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { SITE, getAbout, getSettings, getTeam, media, safeUrl } from '@/lib/cms'
+import { Badges } from '@/components/Blocks'
+import { SITE, getAbout, getSettings, getTeam, media } from '@/lib/cms'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, share } from '@/lib/seo'
 
@@ -96,34 +97,15 @@ export default async function About({ params }: P) {
             <div className="team">
               {team.map((m) => {
                 const photo = media(m.photo)
-                const link = safeUrl(m.link)
-                const body = (
-                  <>
+                return (
+                  <Link className="tm" key={m.id} href={`/${locale}/about/team/${m.id}`}>
                     {photo && <img src={photo} alt={m.name} loading="lazy" />}
                     <h3>{m.name}</h3>
                     {m.role && <div className="r">{m.role}</div>}
-                    {m.badges?.length > 0 && (
-                      <div className="bdg">
-                        {m.badges
-                          .filter((b: unknown) => typeof b === 'object')
-                          .map((b: { id: string; label: string; color?: string }) => (
-                            <span key={b.id} style={{ background: b.color || '#f55600', color: '#fff' }}>
-                              {b.label}
-                            </span>
-                          ))}
-                      </div>
-                    )}
-                    {m.bio && <p>{m.bio}</p>}
-                  </>
-                )
-                return link ? (
-                  <a className="tm" key={m.id} href={link} target="_blank" rel="noopener noreferrer">
-                    {body}
-                  </a>
-                ) : (
-                  <div className="tm" key={m.id}>
-                    {body}
-                  </div>
+                    <Badges list={m.badges} />
+                    {(m.summary || m.bio) && <p className="clamp">{m.summary || m.bio}</p>}
+                    <span className="more">{t.readMore} →</span>
+                  </Link>
                 )
               })}
             </div>

@@ -22,7 +22,25 @@ const NAMES: Record<string, string> = {
   si: 'Sinhala',
 }
 
-const enabled = () => Boolean(process.env.TRANSLATE_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.TRANSLATE_MOCK)
+// per-language style notes from native-speaker feedback; add a line when a reader says a language sounds off
+const HINTS: Record<string, string> = {
+  hi: 'Use natural spoken-but-respectful Hindi with common Hindi/Urdu-origin words, not Sanskritised or textbook phrasing; split long English sentences into shorter ones. ',
+  bn: 'Use natural modern Bangla, not a literal rendering; avoid overusing "সত্যিই/সত্যি সত্যি" for "truly/really/definitely", and leave such intensifiers out when the sentence reads fine without them. ',
+  ga: 'Use current standard Irish (An Caighdeán Oifigiúil) in a plain, modern register, with correct mutations; avoid stiff literal calques of English idioms. ',
+  ta: 'Use natural spoken-register Tamil (பேச்சுத் தமிழுக்கு நெருக்கமான எழுத்துத் தமிழ்), not formal textbook Tamil; avoid long Sanskritised compounds. ',
+  te: 'Use natural everyday Telugu (వ్యవహారిక శైలి), not bookish grammatical Telugu; break up long English sentences. ',
+  ml: 'Use natural modern Malayalam as in good journalism, not literal or Sanskrit-heavy phrasing; keep sentences short. ',
+  kn: 'Use natural modern Kannada as in everyday newspapers, not literal or overly Sanskritised phrasing. ',
+  mr: 'Use natural modern Marathi as spoken in Maharashtra, not a Hindi-influenced or word-for-word rendering. ',
+  gu: 'Use natural modern Gujarati as in everyday speech and newspapers, not a Hindi-influenced or word-for-word rendering. ',
+  pa: 'Use natural spoken Punjabi in Gurmukhi (ਆਮ ਬੋਲਚਾਲ ਦੀ ਪੰਜਾਬੀ), avoiding Hindi or English calques. ',
+  ur: 'Use natural, clear Urdu with common everyday vocabulary (not heavily Persianised or Hindi-fied), and write fully in Nastaliq-appropriate script and right-to-left punctuation. ',
+  ne: 'Use natural modern Nepali as in everyday speech and news, not a Hindi-influenced or literal rendering. ',
+  si: 'Use natural modern Sinhala in the written-but-readable register used by newspapers, not stiff literary Sinhala or a literal rendering. ',
+}
+
+const enabled = () =>
+  Boolean(process.env.TRANSLATE_API_KEY || process.env.ANTHROPIC_API_KEY || process.env.TRANSLATE_MOCK)
 
 // one line for the startup log, so it is never silently off
 export const translateStatus = () =>
@@ -37,9 +55,12 @@ export const translateStatus = () =>
 async function translate(texts: string[], code: string): Promise<string[]> {
   if (process.env.TRANSLATE_MOCK) return texts.map((t) => `[${code}] ${t}`)
   const system =
-    `You translate website text for a human rights group into ${NAMES[code]}. Translate faithfully and neutrally, keep the tone, ` +
-    'names, numbers, URLs and hashtags unchanged, add nothing. The user message is a JSON array of strings. ' +
-    'Reply with ONLY a JSON array of the same length with the translations in the same order.'
+    `You translate website text for a human rights group into ${NAMES[code]}. Keep the meaning, tone and facts exact, but write it the way ` +
+    `a fluent native speaker would say it, not word for word: rephrase freely, use everyday idiom, and never mirror English sentence structure. ` +
+    `If a literal rendering would sound stiff, bookish or machine-made, choose the natural phrasing instead. Do not repeat the same word ` +
+    `where English uses one word in two senses (for example "truly" and "must"): pick a fitting word for each. Drop filler intensifiers that read clunky. ` +
+    `${HINTS[code] ?? ''}Keep names, numbers, URLs, hashtags, social handles, and brand names such as WhatsApp in their original Latin form, add nothing. ` +
+    'The user message is a JSON array of strings. Reply with ONLY a JSON array of the same length with the translations in the same order.'
   const user = JSON.stringify(texts)
   let reply: string
   if (process.env.TRANSLATE_API_KEY) {
@@ -51,7 +72,10 @@ async function translate(texts: string[], code: string): Promise<string[]> {
       body: JSON.stringify({
         model: process.env.TRANSLATE_MODEL || 'deepseek-flash',
         temperature: 0.2,
-        messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: user },
+        ],
       }),
     })
     if (!res.ok) throw new Error(`translate ${code}: ${res.status} ${await res.text()}`)
@@ -64,7 +88,12 @@ async function translate(texts: string[], code: string): Promise<string[]> {
         'x-api-key': process.env.ANTHROPIC_API_KEY!,
         'anthropic-version': '2023-06-01',
       },
-      body: JSON.stringify({ model: 'claude-haiku-5-5', max_tokens: 16000, system, messages: [{ role: 'user', content: user }] }),
+      body: JSON.stringify({
+        model: 'claude-haiku-5-5',
+        max_tokens: 16000,
+        system,
+        messages: [{ role: 'user', content: user }],
+      }),
     })
     if (!res.ok) throw new Error(`translate ${code}: ${res.status} ${await res.text()}`)
     reply = ((await res.json()) as { content: { text: string }[] }).content[0].text
@@ -180,7 +209,9 @@ export async function translateDoc(payload: Payload, target: Target) {
         for (const g of f.fields)
           if ('name' in g && g.name && JSON.stringify(merged[g.name]) !== JSON.stringify(tgt?.[g.name]))
             data[g.name] = merged[g.name]
-    payload.logger.info(`translate: ${'global' in target ? target.global : `${target.collection} ${target.id}`} -> ${code}`)
+    payload.logger.info(
+      `translate: ${'global' in target ? target.global : `${target.collection} ${target.id}`} -> ${code}`,
+    )
     const ctx = { skipTranslate: true }
     if (isGlobal)
       await payload.updateGlobal({

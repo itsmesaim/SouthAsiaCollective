@@ -41,7 +41,10 @@ const en = {
   calOutlook: 'Outlook',
   calApple: 'Apple Calendar / other (.ics)',
   important: 'Important',
-  kinds: { protest: 'Protest', solidarity: 'Solidarity', fundraiser: 'Fundraiser', event: 'Event' } as Record<string, string>,
+  kinds: { protest: 'Protest', solidarity: 'Solidarity', fundraiser: 'Fundraiser', event: 'Event' } as Record<
+    string,
+    string
+  >,
   allEvents: 'All events',
   past: 'This event has already happened.',
   shareTitle: 'Spread the word',
@@ -127,8 +130,7 @@ const en = {
   emailPlaceholder: 'Your email',
   subscribeBtn: 'Subscribe',
   subscribePending: 'Almost done. We sent you an email: click the link in it to confirm.',
-  consentLabel:
-    'Yes, send me updates from South Asia Collective by email (event announcements, statements and news).',
+  consentLabel: 'Yes, send me updates from South Asia Collective by email (event announcements, statements and news).',
   unsubNote: 'You can unsubscribe at any time with the link in every email.',
   consentNeeded: 'Tick the box to subscribe.',
   confirmSubject: 'Confirm your email',

@@ -234,3 +234,16 @@ export function Gallery({ photos, layout = 'collage' }: { photos: Photo[]; layou
 
 export const readTime = (n: number, l: Locale) => fill(tr(l).readingTime, { n })
 export { longDate }
+
+export function Badges({ list }: { list?: unknown[] }) {
+  const badges = (list ?? []).filter((b): b is { id: string; label: string; color?: string } => typeof b === 'object')
+  return badges.length ? (
+    <div className="bdg">
+      {badges.map((b) => (
+        <span key={b.id} style={{ background: b.color || '#f55600', color: '#fff' }}>
+          {b.label}
+        </span>
+      ))}
+    </div>
+  ) : null
+}

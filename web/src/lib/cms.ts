@@ -127,6 +127,32 @@ export const getTimeline = async (l: Locale) =>
 export const getTeam = async (l: Locale) =>
   (await get<{ docs: Doc[] }>(`/team?${q({ locale: l, limit: 100, sort: '_order', depth: 2 })}`, { docs: [] })).docs
 
+export async function getMember(l: Locale, id: string) {
+  if (!HEX_ID.test(id)) return undefined
+  return (await get<Doc | null>(`/team/${id}?${q({ locale: l, depth: 2 })}`, null)) ?? undefined
+}
+
+const PLATFORMS: Record<string, string> = {
+  website: 'Website',
+  linkedin: 'LinkedIn',
+  instagram: 'Instagram',
+  facebook: 'Facebook',
+  x: 'X',
+  youtube: 'YouTube',
+  tiktok: 'TikTok',
+  github: 'GitHub',
+  fiverr: 'Fiverr',
+  other: 'Link',
+}
+// the legacy single "link" field first, then the Social links list; bad urls are dropped
+export const memberLinks = (m: Doc) =>
+  [{ kind: 'website', url: m.link }, ...((m.links as { kind: string; url: string }[] | undefined) ?? [])].flatMap(
+    (l) => {
+      const href = safeUrl(l.url)
+      return href ? [{ href, label: PLATFORMS[l.kind] ?? 'Link' }] : []
+    },
+  )
+
 export const getReactions = (post: string) => get<Record<string, number>>(`/public/reactions?post=${post}`, {})
 
 export const getComments = (post: string) => get<Doc[]>(`/public/comments?post=${post}`, [])
