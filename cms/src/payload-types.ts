@@ -1135,6 +1135,19 @@ export interface SiteSetting {
   heroTitle1?: string | null;
   heroTitle2?: string | null;
   heroText?: string | null;
+  /**
+   * The stack of photos next to the main headline, up to 3. Order: 1 is top left, 2 is on the right, 3 is bottom left. Leave empty to use the first gallery photos. Visitors can hover over a photo to bring it to the front.
+   */
+  heroPhotos?:
+    | {
+        image: string | Media;
+        /**
+         * Describe the photo for people using screen readers
+         */
+        alt: string;
+        id?: string | null;
+      }[]
+    | null;
   tickerWords?:
     | {
         word?: string | null;
@@ -1308,6 +1321,13 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   heroTitle1?: T;
   heroTitle2?: T;
   heroText?: T;
+  heroPhotos?:
+    | T
+    | {
+        image?: T;
+        alt?: T;
+        id?: T;
+      };
   tickerWords?:
     | T
     | {

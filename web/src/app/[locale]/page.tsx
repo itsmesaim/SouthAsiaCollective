@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 
 import { CutHeadline, TimelineCard, Gallery, EventList, Flyers, JsonLd, Tapes, eventsJsonLd } from '@/components/Blocks'
 import { SubscribeForm } from '@/components/Forms'
-import { SITE, galleryPhotos, getEvents, getPosts, getSettings, getTimeline, safeUrl } from '@/lib/cms'
+import { SITE, galleryPhotos, getEvents, heroPhotos, getPosts, getSettings, getTimeline, safeUrl } from '@/lib/cms'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, share } from '@/lib/seo'
 
@@ -36,6 +36,7 @@ export default async function Home({ params }: P) {
 
   const allPhotos = galleryPhotos(s)
   const photos = allPhotos.slice(0, 4)
+  const hero = heroPhotos(s)
   const ticker = s.tickerWords?.length ? (s.tickerWords as { word: string }[]).map((w) => w.word) : t.ticker
   const pills = s.aboutPills?.length ? (s.aboutPills as { text: string }[]).map((p) => p.text) : t.pills
   // the CMS stores the English defaults too: show our translated text unless an editor changed it
@@ -68,8 +69,8 @@ export default async function Home({ params }: P) {
             </div>
           </div>
           <div className="collage" aria-hidden={photos.length < 1}>
-            {[photos[2] ?? photos[0], photos[0], photos[1] ?? photos[0]].map((p, i) => (
-              <figure key={i} className={`ph p${i + 1}`}>
+            {hero.map((p, i) => (
+              <figure key={i} className={`ph p${i + 1}`} tabIndex={0}>
                 <img src={p.src} alt={i === 0 ? p.alt : ''} />
               </figure>
             ))}

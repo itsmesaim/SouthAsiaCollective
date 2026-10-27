@@ -121,6 +121,16 @@ export const galleryPhotos = (s: Doc): { src: string; alt: string; caption?: str
   return g.length ? g : FALLBACK_PHOTOS
 }
 
+// the three photos stacked beside the home page headline: set in Site settings, else the first gallery photos
+export const heroPhotos = (s: Doc): { src: string; alt: string }[] => {
+  const h = ((s.heroPhotos as Doc[] | undefined) ?? []).flatMap((x) =>
+    media(x.image) ? [{ src: media(x.image)!, alt: (x.alt as string) || '' }] : [],
+  )
+  if (h.length) return h
+  const g = galleryPhotos(s)
+  return [g[2] ?? g[0], g[0], g[1] ?? g[0]]
+}
+
 export const getTimeline = async (l: Locale) =>
   (await get<{ docs: Doc[] }>(`/timeline?${q({ locale: l, limit: 200, sort: '_order', depth: 1 })}`, { docs: [] })).docs
 

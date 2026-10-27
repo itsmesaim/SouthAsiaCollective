@@ -14,6 +14,27 @@ export const SiteSettings: GlobalConfig = {
     { name: 'heroTitle1', type: 'text', localized: true, defaultValue: 'Fighting for democracy.' },
     { name: 'heroTitle2', type: 'text', localized: true, defaultValue: 'Standing in solidarity.' },
     { name: 'heroText', type: 'textarea', localized: true },
+    {
+      name: 'heroPhotos',
+      type: 'array',
+      label: 'Home page top photos',
+      maxRows: 3,
+      labels: { singular: 'Photo', plural: 'Top photos' },
+      admin: {
+        description:
+          'The stack of photos next to the main headline, up to 3. Order: 1 is top left, 2 is on the right, 3 is bottom left. Leave empty to use the first gallery photos. Visitors can hover over a photo to bring it to the front.',
+      },
+      fields: [
+        { name: 'image', type: 'upload', relationTo: 'media', required: true },
+        {
+          name: 'alt',
+          type: 'text',
+          localized: true,
+          required: true,
+          admin: { description: 'Describe the photo for people using screen readers' },
+        },
+      ],
+    },
     { name: 'tickerWords', type: 'array', fields: [{ name: 'word', type: 'text', localized: true }] },
     {
       type: 'collapsible',
