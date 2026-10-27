@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
 import { Badges } from '@/components/Blocks'
-import { SITE, getAbout, getSettings, getTeam, media } from '@/lib/cms'
+import { SITE, getAbout, getSettings, getSupporters, getTeam, media, safeUrl } from '@/lib/cms'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, share } from '@/lib/seo'
 
@@ -28,7 +28,12 @@ export default async function About({ params }: P) {
   const { locale } = await params
   if (!isLocale(locale)) notFound()
   const t = tr(locale)
-  const [a, s, team] = await Promise.all([getAbout(locale), getSettings(locale), getTeam(locale)])
+  const [a, s, team, supporters] = await Promise.all([
+    getAbout(locale),
+    getSettings(locale),
+    getTeam(locale),
+    getSupporters(locale),
+  ])
   const pills = s.aboutPills?.length ? (s.aboutPills as { text: string }[]).map((p) => p.text) : t.pills
   const objectives = (a.objectives ?? []) as { id: string; title?: string; text: string }[]
   const demands = (a.demands ?? []) as { id: string; title: string; text: string }[]
@@ -106,6 +111,38 @@ export default async function About({ params }: P) {
                     {(m.summary || m.bio) && <p className="clamp">{m.summary || m.bio}</p>}
                     <span className="more">{t.readMore} →</span>
                   </Link>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {supporters.length > 0 && (
+        <section className="band paper">
+          <div className="w">
+            <div className="sec-head">
+              <h2>{(a.supportersTitle as string) || t.supporters}</h2>
+            </div>
+            <div className="supporters">
+              {supporters.map((o) => {
+                const logo = media(o.logo)
+                const href = safeUrl(o.link)
+                const body = (
+                  <>
+                    {logo && <img src={logo} alt="" loading="lazy" />}
+                    <h3>{o.name}</h3>
+                    {o.about && <p>{o.about}</p>}
+                  </>
+                )
+                return href ? (
+                  <a className="sup" key={o.id} href={href} target="_blank" rel="noopener noreferrer">
+                    {body}
+                  </a>
+                ) : (
+                  <div className="sup" key={o.id}>
+                    {body}
+                  </div>
                 )
               })}
             </div>

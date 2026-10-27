@@ -75,6 +75,7 @@ export interface Config {
     timeline: Timeline;
     coverage: Coverage;
     team: Team;
+    supporters: Supporter;
     badges: Badge;
     media: Media;
     comments: Comment;
@@ -96,6 +97,7 @@ export interface Config {
     timeline: TimelineSelect<false> | TimelineSelect<true>;
     coverage: CoverageSelect<false> | CoverageSelect<true>;
     team: TeamSelect<false> | TeamSelect<true>;
+    supporters: SupportersSelect<false> | SupportersSelect<true>;
     badges: BadgesSelect<false> | BadgesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
@@ -582,6 +584,31 @@ export interface Team {
   createdAt: string;
 }
 /**
+ * Organisations that have supported us. Shown on the About page under their own heading.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supporters".
+ */
+export interface Supporter {
+  id: string;
+  _order?: string | null;
+  name: string;
+  /**
+   * Optional. A square or wide logo.
+   */
+  logo?: (string | null) | Media;
+  /**
+   * Optional. One line on who they are or how they helped.
+   */
+  about?: string | null;
+  /**
+   * Optional, e.g. rosa.ie (https:// is added for you). Makes the card clickable.
+   */
+  link?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * Small labels you can give people on the About page.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -967,6 +994,19 @@ export interface TeamSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "supporters_select".
+ */
+export interface SupportersSelect<T extends boolean = true> {
+  _order?: T;
+  name?: T;
+  logo?: T;
+  about?: T;
+  link?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "badges_select".
  */
 export interface BadgesSelect<T extends boolean = true> {
@@ -1190,6 +1230,10 @@ export interface AboutPage {
       }[]
     | null;
   /**
+   * Heading above the supporting organisations (they are added under Community > Supporters). Leave empty for "Organisations that have supported us along the way".
+   */
+  supportersTitle?: string | null;
+  /**
    * One line above the demands, optional
    */
   demandsIntro?: string | null;
@@ -1319,6 +1363,7 @@ export interface AboutPageSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
+  supportersTitle?: T;
   demandsIntro?: T;
   demands?:
     | T

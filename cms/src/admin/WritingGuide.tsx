@@ -75,7 +75,7 @@ Our demands
 
 const TEAM: Guide = {
   hints: [
-    "Photo: a clear, square-ish head and shoulders photo. It is shown in black and white. Only add a photo with the person's consent.",
+    "Photo: a clear, square-ish head and shoulders photo. It turns from black and white to colour when hovered. Only add a photo with the person's consent.",
     'Role: a few words, e.g. "Founder, program management".',
     'Summary: one or two sentences in the first person for the card, e.g. "I help turn protests into a lasting organisation."',
     'Bio: the full story, 80-200 words: why you joined, what you do, what you hope for. Short paragraphs.',

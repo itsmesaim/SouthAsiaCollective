@@ -127,6 +127,10 @@ export const getTimeline = async (l: Locale) =>
 export const getTeam = async (l: Locale) =>
   (await get<{ docs: Doc[] }>(`/team?${q({ locale: l, limit: 100, sort: '_order', depth: 2 })}`, { docs: [] })).docs
 
+export const getSupporters = async (l: Locale) =>
+  (await get<{ docs: Doc[] }>(`/supporters?${q({ locale: l, limit: 100, sort: '_order', depth: 1 })}`, { docs: [] }))
+    .docs
+
 export async function getMember(l: Locale, id: string) {
   if (!HEX_ID.test(id)) return undefined
   return (await get<Doc | null>(`/team/${id}?${q({ locale: l, depth: 2 })}`, null)) ?? undefined

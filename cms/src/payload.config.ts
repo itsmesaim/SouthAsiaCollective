@@ -16,6 +16,7 @@ import { Media } from './collections/Media'
 import { Posts } from './collections/Posts'
 import { Reactions } from './collections/Reactions'
 import { Subscribers } from './collections/Subscribers'
+import { Supporters } from './collections/Supporters'
 import { Team } from './collections/Team'
 import { Kits } from './collections/Kits'
 import { Tags } from './collections/Tags'
@@ -73,6 +74,7 @@ export default buildConfig({
     Timeline,
     Coverage,
     Team,
+    Supporters,
     Badges,
     Media,
     Comments,
@@ -89,7 +91,10 @@ export default buildConfig({
       },
     },
   })),
-  globals: [SiteSettings, AboutPage, PressKit].map((g) => ({ ...g, hooks: { ...g.hooks, afterChange: [...(g.hooks?.afterChange ?? []), autoTranslateGlobal] } })),
+  globals: [SiteSettings, AboutPage, PressKit].map((g) => ({
+    ...g,
+    hooks: { ...g.hooks, afterChange: [...(g.hooks?.afterChange ?? []), autoTranslateGlobal] },
+  })),
   endpoints,
   plugins: [
     // without CLOUDINARY_* env vars the plugin is off and uploads stay on local disk

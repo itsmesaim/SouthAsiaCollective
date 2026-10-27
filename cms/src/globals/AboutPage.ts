@@ -25,6 +25,15 @@ export const AboutPage: GlobalConfig = {
       ],
     },
     {
+      name: 'supportersTitle',
+      type: 'text',
+      localized: true,
+      admin: {
+        description:
+          'Heading above the supporting organisations (they are added under Community > Supporters). Leave empty for "Organisations that have supported us along the way".',
+      },
+    },
+    {
       name: 'demandsIntro',
       type: 'text',
       localized: true,

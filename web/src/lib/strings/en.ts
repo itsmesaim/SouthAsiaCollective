@@ -83,6 +83,7 @@ const en = {
   objectives: 'What we want to achieve',
   demands: 'Our demands',
   team: 'Our people',
+  supporters: 'Organisations that have supported us along the way',
   moreAbout: 'Meet the team',
   done: "What we've done",
   doneSub: "We organise in Dublin to amplify the youth movements back home. Here is what we've done so far.",
