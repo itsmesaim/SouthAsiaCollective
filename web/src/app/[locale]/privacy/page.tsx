@@ -28,7 +28,7 @@ export default async function Privacy({ params }: P) {
       <div className="w narrow">
         <h1>{t.privacy}</h1>
         <div className="prose">
-          {t.policy.map(([h, ps]) => (
+          {[...t.policy, ...t.policyExtra].map(([h, ps]) => (
             <section key={h}>
               <h2>{h}</h2>
               {ps.map((p, i) => (

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 
-import { Clippings, JsonLd } from '@/components/Blocks'
+import { Clippings, CutHeadline, JsonLd } from '@/components/Blocks'
 import { type Doc, SITE, getCoverage, getKits, getPressKit, media } from '@/lib/cms'
 import { isLocale, tr } from '@/lib/i18n'
 import { alts, fmtDate, share } from '@/lib/seo'
@@ -22,6 +22,26 @@ export async function generateMetadata({ params }: P): Promise<Metadata> {
     alternates: alts('/press-kit', locale),
     ...share(`${SITE}/${locale}/press-kit`, t.pressKitTitle, desc),
   }
+}
+
+// a fact that is really a link (handle, web address, email) becomes clickable
+function factHref(label: string, value: string): string | null {
+  const v = value.trim()
+  if (/^https?:\/\//i.test(v)) return v
+  if (/^\S+@\S+\.\S+$/.test(v)) return `mailto:${v}`
+  if (/^@[\w.]+$/.test(v)) {
+    const h = v.slice(1)
+    if (/insta/i.test(label)) return `https://www.instagram.com/${h}/`
+    if (/^(x|twitter)\b/i.test(label)) return `https://x.com/${h}`
+    if (/facebook/i.test(label)) return `https://www.facebook.com/${h}`
+    if (/tiktok/i.test(label)) return `https://www.tiktok.com/@${h}`
+    if (/youtube/i.test(label)) return `https://www.youtube.com/@${h}`
+    return null
+  }
+  // our own website: no point linking to the page you are on
+  if (/^web(site)?$/i.test(label) || /southasiacollective\.ie/i.test(v)) return null
+  if (/^(www\.)?[\w-]+(\.[\w-]+)+(\/\S*)?$/i.test(v)) return `https://${v}`
+  return null
 }
 
 // one card per protest, newest first
@@ -55,9 +75,21 @@ export default async function PressKit({ params }: P) {
   const contacts = (kit.contacts ?? []) as { id: string; name: string; role?: string; email?: string; phone?: string }[]
   const assets = (kit.assets ?? []) as Doc[]
   const url = `${SITE}/${locale}/press-kit`
+  const uploaded = media(kit.groupPhoto)
+  const groupPhoto = uploaded ?? '/photo3.jpg'
+  const groupAlt = (kit.groupPhoto as Doc | undefined)?.alt || 'South Asia Collective members at a protest in Dublin'
+  const groupCaption = uploaded ? ((kit.groupPhoto as Doc).caption as string | undefined) : undefined
+  const [first, ...rest] = t.pressKitTitle.split(/\s+/)
+  const mail = contacts.find((c) => c.email)?.email
+  const jumps = [
+    kits.length > 0 && { href: '#kits', label: t.kitLatest },
+    { href: '#info', label: t.generalInfo },
+    assets.length > 0 && { href: '#assets', label: t.assets },
+    coverage.length > 0 && { href: '#news', label: t.inTheNews },
+  ].filter(Boolean) as { href: string; label: string }[]
 
   return (
-    <article className="page">
+    <>
       <JsonLd
         data={{
           '@context': 'https://schema.org',
@@ -68,19 +100,48 @@ export default async function PressKit({ params }: P) {
           about: { '@id': `${SITE}/#org` },
         }}
       />
-      <div className="w">
-        <h1>{t.pressKitTitle}</h1>
-        <p className="lead-text" style={{ color: '#ecebe4', maxWidth: '36em' }}>
-          {t.pressKitIntro}
-        </p>
 
-        {kits.length > 0 && (
-          <section className="kits">
-            <h2>{t.kitLatest}</h2>
+      <section className="hero pk-hero">
+        <div className="w">
+          <div>
+            <p className="note">{t.press}</p>
+            <CutHeadline line1={first} line2={rest.join(' ') || first} />
+            <p className="lead">{t.pressKitIntro}</p>
+            <div className="cta">
+              {assets.length > 0 && (
+                <a className="btn" href="/press-kit/all.zip">
+                  {t.downloadAll}
+                </a>
+              )}
+              {mail && (
+                <a className="btn paper" href={`mailto:${mail}`}>
+                  {t.emailUs}
+                </a>
+              )}
+            </div>
+          </div>
+          <nav className="pk-jump" aria-label={t.pressKitTitle}>
+            {jumps.map((j) => (
+              <a key={j.href} href={j.href}>
+                {j.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </section>
+
+      {kits.length > 0 && (
+        <section className="band" id="kits" style={{ paddingTop: 0 }}>
+          <div className="w">
+            <div className="sec-head">
+              <h2>{t.kitLatest}</h2>
+            </div>
             <KitCard k={kits[0]} locale={locale} big />
             {kits.length > 1 && (
               <>
-                <h2 style={{ marginTop: 48 }}>{t.kitEarlier}</h2>
+                <div className="sec-head" style={{ marginTop: 56 }}>
+                  <h2>{t.kitEarlier}</h2>
+                </div>
                 <div className="kitgrid">
                   {kits.slice(1).map((k) => (
                     <KitCard key={k.id} k={k} locale={locale} />
@@ -88,25 +149,45 @@ export default async function PressKit({ params }: P) {
                 </div>
               </>
             )}
-          </section>
-        )}
+          </div>
+        </section>
+      )}
 
-        <div className="kit" style={{ marginTop: 48 }}>
-          <h2>{t.generalInfo}</h2>
+      <section className="band saffron" id="info">
+        <div className="w kit">
+          <div className="sec-head">
+            <h2>{t.generalInfo}</h2>
+          </div>
+          {facts.length > 0 && (
+            <div className="pk-facts">
+              {facts.map((f) => {
+                const href = factHref(f.label, f.value)
+                const cls = f.value.length > 18 ? 'pk-fact long' : 'pk-fact'
+                const inner = (
+                  <>
+                    <b>{f.value}</b>
+                    <span>{f.label}</span>
+                  </>
+                )
+                return href ? (
+                  <a
+                    className={cls}
+                    key={f.id}
+                    href={href}
+                    target={href.startsWith('mailto:') ? undefined : '_blank'}
+                    rel="noopener noreferrer"
+                  >
+                    {inner}
+                  </a>
+                ) : (
+                  <div className={cls} key={f.id}>
+                    {inner}
+                  </div>
+                )
+              })}
+            </div>
+          )}
           <div className="give">
-            {facts.length > 0 && (
-              <section className="sheet">
-                <h2>{t.facts}</h2>
-                <dl>
-                  {facts.map((f) => (
-                    <div key={f.id} style={{ display: 'contents' }}>
-                      <dt>{f.label}</dt>
-                      <dd>{f.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </section>
-            )}
             {contacts.length > 0 && (
               <section className="sheet t2">
                 <h2>{t.contacts}</h2>
@@ -130,10 +211,19 @@ export default async function PressKit({ params }: P) {
                 ))}
               </section>
             )}
+            <figure className="pk-photo">
+              <img src={groupPhoto} alt={groupAlt} loading="lazy" />
+              {groupCaption && <figcaption>{groupCaption}</figcaption>}
+            </figure>
           </div>
-
+          {kit.guidelines && (
+            <section className="sheet t1">
+              <h2>{t.guidelines}</h2>
+              <p>{kit.guidelines}</p>
+            </section>
+          )}
           {assets.length > 0 && (
-            <section className="sheet">
+            <section className="sheet" id="assets">
               <h2>{t.assets}</h2>
               <div className="assets">
                 {assets.map((a) => (
@@ -153,22 +243,19 @@ export default async function PressKit({ params }: P) {
               </a>
             </section>
           )}
-
-          {kit.guidelines && (
-            <section className="sheet t2">
-              <h2>{t.guidelines}</h2>
-              <p>{kit.guidelines}</p>
-            </section>
-          )}
         </div>
+      </section>
 
-        {coverage.length > 0 && (
-          <div className="related" id="news">
-            <h2>{t.inTheNews}</h2>
+      {coverage.length > 0 && (
+        <section className="band green" id="news">
+          <div className="w">
+            <div className="sec-head">
+              <h2>{t.inTheNews}</h2>
+            </div>
             <Clippings items={coverage} />
           </div>
-        )}
-      </div>
-    </article>
+        </section>
+      )}
+    </>
   )
 }

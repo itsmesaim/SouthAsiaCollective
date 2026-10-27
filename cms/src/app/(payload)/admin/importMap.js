@@ -1,5 +1,6 @@
 import { TOTPField as TOTPField_4eaf6cb33cfb75be01716613e3c9a512 } from 'payload-totp/rsc'
 import { DeleteButton as DeleteButton_7acefe8b91a357448e8957e1a31ee1c0 } from '../../../admin/DeleteButton'
+import { PostGuide as PostGuide_c8ea1c0d57f90e0a9fa317e2702ddf87 } from '../../../admin/WritingGuide'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -25,6 +26,7 @@ import { RelationshipFeatureClient as RelationshipFeatureClient_e70f5e05f09f93e0
 import { BlockquoteFeatureClient as BlockquoteFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { InlineToolbarFeatureClient as InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { TeamGuide as TeamGuide_c8ea1c0d57f90e0a9fa317e2702ddf87 } from '../../../admin/WritingGuide'
 import { Icon as Icon_8c3bf6d9c8d24e4e81ab6192a4938147 } from '../../../admin/Logo'
 import { Logo as Logo_8c3bf6d9c8d24e4e81ab6192a4938147 } from '../../../admin/Logo'
 import { HeaderActions as HeaderActions_ff71ff1ea2dd40c5fc32284ea0e10ec4 } from '../../../admin/HeaderActions'
@@ -34,15 +36,12 @@ import { TOTPProvider as TOTPProvider_4eaf6cb33cfb75be01716613e3c9a512 } from 'p
 import { TOTPSetup as TOTPSetup_4eaf6cb33cfb75be01716613e3c9a512 } from 'payload-totp/rsc'
 import { TOTPVerify as TOTPVerify_4eaf6cb33cfb75be01716613e3c9a512 } from 'payload-totp/rsc'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
-import { PostGuide as PostGuide_w1 } from '../../../admin/WritingGuide'
-import { TeamGuide as TeamGuide_w1 } from '../../../admin/WritingGuide'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
   "payload-totp/rsc#TOTPField": TOTPField_4eaf6cb33cfb75be01716613e3c9a512,
-  "/admin/WritingGuide#PostGuide": PostGuide_w1,
-  "/admin/WritingGuide#TeamGuide": TeamGuide_w1,
   "/admin/DeleteButton#DeleteButton": DeleteButton_7acefe8b91a357448e8957e1a31ee1c0,
+  "/admin/WritingGuide#PostGuide": PostGuide_c8ea1c0d57f90e0a9fa317e2702ddf87,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -68,6 +67,7 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#BlockquoteFeatureClient": BlockquoteFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#InlineToolbarFeatureClient": InlineToolbarFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "/admin/WritingGuide#TeamGuide": TeamGuide_c8ea1c0d57f90e0a9fa317e2702ddf87,
   "/admin/Logo#Icon": Icon_8c3bf6d9c8d24e4e81ab6192a4938147,
   "/admin/Logo#Logo": Logo_8c3bf6d9c8d24e4e81ab6192a4938147,
   "/admin/HeaderActions#HeaderActions": HeaderActions_ff71ff1ea2dd40c5fc32284ea0e10ec4,

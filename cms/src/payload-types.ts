@@ -572,7 +572,17 @@ export interface Team {
    */
   links?:
     | {
-        kind: 'website' | 'linkedin' | 'instagram' | 'facebook' | 'x' | 'youtube' | 'tiktok' | 'github' | 'fiverr' | 'other';
+        kind:
+          | 'website'
+          | 'linkedin'
+          | 'instagram'
+          | 'facebook'
+          | 'x'
+          | 'youtube'
+          | 'tiktok'
+          | 'github'
+          | 'fiverr'
+          | 'other';
         /**
          * e.g. linkedin.com/in/name (https:// is added for you)
          */
@@ -580,6 +590,22 @@ export interface Team {
         id?: string | null;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Small labels you can give people on the About page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "badges".
+ */
+export interface Badge {
+  id: string;
+  label: string;
+  /**
+   * Hex colour
+   */
+  color?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -605,22 +631,6 @@ export interface Supporter {
    * Optional, e.g. rosa.ie (https:// is added for you). Makes the card clickable.
    */
   link?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * Small labels you can give people on the About page.
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "badges".
- */
-export interface Badge {
-  id: string;
-  label: string;
-  /**
-   * Hex colour
-   */
-  color?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -743,6 +753,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team';
         value: string | Team;
+      } | null)
+    | ({
+        relationTo: 'supporters';
+        value: string | Supporter;
       } | null)
     | ({
         relationTo: 'badges';
@@ -1272,6 +1286,10 @@ export interface PressKit {
    * A short paragraph about the group that can be copied as is.
    */
   boilerplate?: string | null;
+  /**
+   * The photo of us shown in "The basics" on the press kit page. Leave empty to use a default group photo.
+   */
+  groupPhoto?: (string | null) | Media;
   facts?:
     | {
         /**
@@ -1402,6 +1420,7 @@ export interface AboutPageSelect<T extends boolean = true> {
  */
 export interface PressKitSelect<T extends boolean = true> {
   boilerplate?: T;
+  groupPhoto?: T;
   facts?:
     | T
     | {

@@ -103,7 +103,7 @@ const en = {
   kitPhotos: 'Photos and videos for the press',
   kitCoverage: 'News that covered this protest',
   kitBack: 'All press kits',
-  generalInfo: 'Logos, facts and contacts',
+  generalInfo: 'The basics',
   allTags: 'All topics',
   sourcesTitle: 'In the news about this',
   topics: 'Topics',
@@ -240,6 +240,23 @@ const en = {
       [
         'You can ask us to access, correct, delete, restrict or export your data, to object to processing, and to withdraw consent at any time. Email {email}. You can unsubscribe using the link in any email we send.',
         'You also have the right to complain to the Data Protection Commission of Ireland (dataprotection.ie).',
+      ],
+    ],
+  ] as Policy,
+
+  // added after the translated policies were written: other languages show these in English until they are translated
+  policyExtra: [
+    [
+      'Photos',
+      [
+        'We publish photos from our public events. If you appear in one and want it removed or blurred, write to {email} and we will do it promptly.',
+      ],
+    ],
+    [
+      'Translations',
+      [
+        'This site is written in English and translated into other languages automatically by an AI service. Translations can contain mistakes. If a translation looks wrong or unclear, go by the English text, and tell us at {email} so we can fix it.',
+        'To translate, we send the text we are about to publish (posts, events, team and page text) to an AI translation service. We never send visitor data such as email addresses, comments or newsletter details.',
       ],
     ],
   ] as Policy,

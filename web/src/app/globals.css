@@ -188,7 +188,7 @@ main > .band:nth-of-type(even):not(.paper):not(.saffron):not(.green) { backgroun
 
 /* ---------- about teaser + page ---------- */
 .about-grid { display: grid; grid-template-columns: minmax(220px, 380px) minmax(0, 1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
-.about-grid .badge { width: 100%; aspect-ratio: 1; border-radius: 50%; box-shadow: var(--lift); border: 6px solid var(--ink); transform: rotate(-4deg); }
+.about-grid .badge { width: 100%; aspect-ratio: 1; border-radius: 50%; box-shadow: var(--lift); transform: rotate(-4deg); }
 .lead-text { white-space: pre-line; font: 400 clamp(19px, 2.2vw, 23px)/1.6 var(--serif); max-width: 40em; }
 .pills { list-style: none; padding: 0; margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px; }
 .pills li { background: var(--ink); color: var(--paper); padding: 10px 18px; font: 800 20px/1.2 var(--display); font-stretch: 85%; transform: rotate(var(--r, 0deg)); }
@@ -243,24 +243,90 @@ a.sup:hover { background: var(--marigold); }
 /* ---------- gallery: pinned photos ---------- */
 .pin { margin: 0 0 30px; background: var(--paper); padding: 10px; box-shadow: var(--lift); transform: rotate(var(--r, 0deg)); transition: transform 0.25s; position: relative; break-inside: avoid; }
 .pin img { width: 100%; height: auto; filter: grayscale(1) contrast(1.1); transition: filter 0.3s; }
-.pin:hover { transform: rotate(0) scale(1.02); z-index: 2; }
+.pin:hover { z-index: 2; }
 .pin:hover img { filter: none; }
 .pin:nth-child(3n + 1) { --r: -1.2deg; }
 .pin:nth-child(3n + 2) { --r: 1.4deg; }
 .pin:nth-child(3n) { --r: -0.5deg; }
-.pin::before { content: ''; position: absolute; top: -12px; inset-inline-start: 50%; width: 80px; height: 24px; background: rgba(255, 194, 26, 0.88); transform: translateX(-50%) rotate(3deg); z-index: 1; }
+/* push-pins: real buttons, six colours. Hover pulls the pin; pressing it twice drops the paper (see PinFun) */
+.pin:nth-child(even), .clip:nth-child(even) { --tx: 40%; --pr: -8deg; }
+.pin:nth-child(3n), .clip:nth-child(3n) { --tx: 60%; --pr: 7deg; }
+.tack { position: absolute; top: -29px; inset-inline-start: var(--tx, 50%); width: 49px; height: 51px; margin-inline-start: -24.5px; padding: 0; border: 0; background: none; cursor: pointer; z-index: 4; transform: translateY(var(--py, 0)) rotate(var(--pr, 0deg)); transform-origin: 50% 88%; transition: transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1), filter 0.35s; -webkit-tap-highlight-color: transparent; }
+.tack img { width: 100%; height: 100%; display: block; pointer-events: none; user-select: none; }
+.tack:focus-visible { outline: 3px solid var(--paper); outline-offset: 3px; border-radius: 50%; }
+/* the small hole the pin leaves in the paper */
+.pin::after, .clip::after { content: ''; position: absolute; top: 14px; inset-inline-start: var(--tx, 50%); width: 6px; height: 4px; margin-inline-start: -3px; border-radius: 50%; background: rgba(0, 0, 0, 0.55); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5); opacity: 0; transition: opacity 0.2s; z-index: 1; pointer-events: none; }
+@media (hover: hover) {
+  .pin:hover .tack, .clip:hover .tack { --py: -22px; --pr: -22deg; }
+  .pin:nth-child(even):hover .tack, .clip:nth-child(even):hover .tack { --pr: 20deg; }
+  .pin:hover::after, .clip:hover::after { opacity: 1; }
+  .pin:hover, .clip:hover { transform-origin: var(--tx, 50%) 0; transform: rotate(calc(var(--r, 0deg) * -2.4)) translateY(8px) scale(1.02); box-shadow: 10px 16px 0 rgba(0, 0, 0, 0.4); }
+}
+/* first press: the pin wiggles in its hole */
+.wiggle .tack { animation: tack-wiggle 0.45s ease; }
+.wiggle { animation: card-shake 0.45s ease; }
+@keyframes tack-wiggle { 25% { transform: translateY(-5px) rotate(-14deg); } 55% { transform: translateY(-2px) rotate(11deg); } 80% { transform: translateY(-3px) rotate(-5deg); } }
+@keyframes card-shake { 25% { transform: rotate(calc(var(--r, 0deg) - 1.6deg)); } 55% { transform: rotate(calc(var(--r, 0deg) + 1.2deg)); } }
+/* second press: the pin pops out, the paper hangs by a corner, then drops off the wall */
+.fall { transform-origin: var(--tx, 50%) 0; animation: paper-fall 1s cubic-bezier(0.55, 0, 0.9, 0.55) forwards; pointer-events: none; z-index: 30; }
+.fall .tack { animation: tack-pop 1s cubic-bezier(0.4, 0, 0.9, 0.6) forwards; }
+.fall::after { opacity: 1; }
+@keyframes paper-fall {
+  0% { transform: rotate(var(--r, 0deg)); }
+  18% { transform: rotate(calc(var(--r, 0deg) + var(--swing, -14deg))) translateY(4px); }
+  30% { transform: rotate(calc(var(--r, 0deg) + var(--swing, -14deg) * 0.55)) translateY(10px); }
+  100% { transform: translate(var(--drift, 40px), 105vh) rotate(var(--spin, 38deg)); box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+}
+@keyframes tack-pop {
+  0% { transform: translateY(0) rotate(var(--pr, 0deg)); }
+  14% { transform: translateY(-38px) rotate(-34deg) scale(1.18); }
+  100% { transform: translate(-40px, 100vh) rotate(-300deg); }
+}
+.fallen { visibility: hidden; }
+/* closed again: the paper is pinned back up */
+.back { animation: paper-back 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both; }
+.back .tack { animation: tack-press 0.55s 0.15s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+@keyframes paper-back { from { opacity: 0; transform: translateY(-60px) rotate(calc(var(--r, 0deg) * -4)) scale(1.07); } }
+@keyframes tack-press { from { transform: translateY(-34px) rotate(-30deg) scale(1.2); } }
+@media (prefers-reduced-motion: reduce) {
+  .tack, .pin, .clip { transition: none; }
+  .wiggle, .wiggle .tack, .back, .back .tack, .fall, .fall .tack { animation: none; }
+}
+/* the opened paper */
+.pf-back { position: fixed; inset: 0; z-index: 200; background: rgba(0, 0, 0, 0.74); display: grid; place-items: center; padding: 20px; overflow: auto; animation: pf-fade 0.25s ease both; }
+.pf-paper { position: relative; background: var(--paper); color: var(--ink); padding: 14px; max-width: min(92vw, 980px); box-shadow: 10px 14px 0 rgba(0, 0, 0, 0.45); transform-origin: 50% 0; animation: pf-open 0.6s cubic-bezier(0.2, 1.1, 0.35, 1) both; }
+.pf-paper figure { margin: 0; }
+.pf-paper img { display: block; max-width: 100%; max-height: 78vh; width: auto; height: auto; margin-inline: auto; }
+.pf-paper figcaption { font: 500 17px/1.5 var(--serif); padding: 12px 6px 2px; }
+.pf-x { position: absolute; top: -16px; inset-inline-end: -16px; width: 42px; height: 42px; border-radius: 50%; border: 3px solid var(--ink); background: var(--saffron); color: var(--ink); font: 800 26px/1 var(--sans); cursor: pointer; box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.5); z-index: 2; }
+.pf-x:focus-visible { outline: 3px solid var(--marigold); outline-offset: 3px; }
+.pf-news { max-width: 640px; padding: 14px 18px 20px; display: flex; flex-direction: column; gap: 14px; }
+.pf-news img { width: calc(100% + 36px); max-width: none; margin: -14px -18px 4px; max-height: 280px; object-fit: cover; border-bottom: 3px solid var(--ink); }
+.pf-news .mast { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-block: 3px double var(--ink); padding: 8px 0; }
+.pf-news .mast b { font: 800 clamp(1.4rem, 3vw, 2rem)/1 var(--display); font-stretch: 85%; }
+.pf-news .mast time { font: 600 14px var(--sans); color: #55544c; }
+.pf-news h3 { font: 700 clamp(24px, 3.4vw, 34px)/1.25 var(--serif); }
+.pf-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
+.pf-links a:not(.btn) { font-weight: 700; text-decoration: underline; color: var(--green); }
+@keyframes pf-fade { from { opacity: 0; } }
+@keyframes pf-open { from { opacity: 0; transform: perspective(1300px) rotateX(-75deg) translateY(-30px) scale(0.92); } }
+@media (prefers-reduced-motion: reduce) { .pf-back, .pf-paper { animation: none; } }
 
 /* ---------- in the news: clippings ---------- */
-.clips { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 22px; }
-.clip { display: flex; flex-direction: column; background: var(--paper); color: var(--ink); box-shadow: var(--lift); transform: rotate(var(--r, 0deg)); transition: transform 0.2s; }
-.clip:nth-child(odd) { --r: -0.4deg; }
-.clip:nth-child(even) { --r: 0.5deg; }
-.clip:hover { transform: rotate(0) translateY(-3px); }
-.clip a.main { display: flex; flex-direction: column; gap: 10px; padding: 20px 22px; flex: 1; }
-.clip a.main img { width: calc(100% + 44px); margin: -20px -22px 4px; max-width: none; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 3px solid var(--ink); }
-.clip b { font: 800 15px/1 var(--display); letter-spacing: 0.02em; align-self: flex-start; background: var(--ink); color: var(--paper); padding: 5px 9px; }
-.clip span { font: 600 clamp(18px, 2vw, 22px)/1.3 var(--serif); text-wrap: balance; }
-.clip a.arch { padding: 0 22px 16px; font-size: 14px; font-weight: 700; text-decoration: underline; color: var(--green); }
+.clips { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 38px 26px; }
+.clip { position: relative; display: flex; flex-direction: column; background: var(--paper); color: var(--ink); box-shadow: var(--lift); transform: rotate(var(--r, 0deg)); transition: transform 0.2s; }
+.clip:nth-child(odd) { --r: -0.5deg; }
+.clip:nth-child(even) { --r: 0.6deg; }
+.clip a.main { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 28px 24px 24px; flex: 1; }
+.clip a.main img { width: calc(100% + 48px); margin: -28px -24px 4px; max-width: none; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 3px solid var(--ink); }
+.clip a.main::after { content: '\2197'; position: absolute; inset-block-end: 12px; inset-inline-end: 18px; font: 800 22px var(--sans); color: var(--saffron); }
+.clip .mast { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-block: 3px double var(--ink); padding: 7px 0; }
+.clip .mast b { font: 800 clamp(1.15rem, 1.8vw, 1.45rem)/1 var(--display); font-stretch: 85%; letter-spacing: -0.01em; }
+.clip .mast time { font: 600 13px/1 var(--sans); color: #55544c; white-space: nowrap; }
+.clip span { font: 700 clamp(19px, 2vw, 23px)/1.3 var(--serif); text-wrap: balance; padding-inline-end: 22px; }
+.clip:first-child { grid-column: 1 / -1; }
+.clip:first-child span { font-size: clamp(24px, 3vw, 34px); }
+.clip a.arch { padding: 0 24px 16px; font-size: 14px; font-weight: 700; text-decoration: underline; color: var(--green); }
 
 /* about: goals (tall sheets with a big keyword) and demands (charge sheets) */
 .goals { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 34px 26px; }
@@ -678,3 +744,43 @@ html:not([lang='en']):not([lang='ga']) .kind { letter-spacing: 0; text-transform
 .brand span { font: 800 clamp(1.05rem, 2.6vw, 1.35rem)/1.1 var(--display); font-stretch: 85%; letter-spacing: -0.01em; white-space: nowrap; }
 @media (max-width: 400px) { .brand { gap: 8px; } .brand span { font-size: 0.98rem; } }
 @media (min-width: 861px) and (max-width: 1159px) { .brand span { display: none; } } /* the full menu needs the room */
+
+/* press kit page: the same cut-out look as the home page, kept apart from the blog */
+.pk-hero .w { align-items: end; }
+.pk-jump { display: grid; gap: 12px; align-content: end; }
+.pk-jump a { background: var(--paper); color: var(--ink); padding: 14px 18px; font: 800 clamp(1.1rem, 2vw, 1.5rem)/1.1 var(--display); font-stretch: 85%; box-shadow: var(--lift); transform: rotate(var(--r, -0.8deg)); transition: transform 0.18s; }
+.pk-jump a:nth-child(even) { --r: 0.9deg; background: var(--marigold); }
+.pk-jump a:hover, .pk-jump a:focus-visible { transform: rotate(0) translateX(6px); }
+.pk-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+.pk-fact { background: var(--ink); color: var(--paper); padding: 20px 22px 18px; box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.35); transform: rotate(var(--r, -1deg)); display: flex; flex-direction: column; gap: 6px; }
+.pk-fact:nth-child(even) { --r: 1deg; background: var(--paper); color: var(--ink); }
+.pk-fact b { font: 800 clamp(1.5rem, 2.8vw, 2.2rem)/1.05 var(--display); font-stretch: 85%; overflow-wrap: break-word; color: var(--marigold); }
+.pk-fact:nth-child(even) b { color: var(--green); }
+.pk-fact.long b { font-size: clamp(0.95rem, 1.3vw, 1.1rem); }
+.pk-fact span { font: 700 14px/1.3 var(--sans); opacity: 0.75; }
+.band.green .related { margin-top: 0; }
+a.pk-fact { transition: transform 0.18s; }
+a.pk-fact:hover, a.pk-fact:focus-visible { transform: rotate(0) translateY(-4px); }
+a.pk-fact span::after { content: ' \2197'; }
+.pk-photo { margin: 0; align-self: start; background: var(--paper); color: var(--ink); padding: 12px 12px 16px; box-shadow: var(--lift); transform: rotate(1.4deg); position: relative; }
+.pk-photo::before { content: ''; position: absolute; top: -13px; inset-inline-start: 40px; width: 90px; height: 26px; background: rgba(255, 194, 26, 0.92); transform: rotate(-3deg); }
+.pk-photo img { width: 100%; height: auto; display: block; }
+.pk-photo figcaption { font: 600 15px/1.4 var(--sans); padding: 10px 4px 0; }
+.kit .give { align-items: start; }
+
+/* gallery photos: the old yellow tape, with the same double press */
+.tape { position: absolute; top: -13px; inset-inline-start: var(--tx, 50%); width: 84px; height: 26px; margin-inline-start: -42px; padding: 0; border: 0; cursor: pointer; z-index: 4; background: linear-gradient(180deg, rgba(255, 214, 80, 0.95), rgba(255, 190, 20, 0.88)); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.25); clip-path: polygon(0 0, 3% 12%, 0 26%, 3% 40%, 0 55%, 3% 70%, 0 85%, 2% 100%, 98% 100%, 100% 85%, 97% 70%, 100% 55%, 97% 40%, 100% 26%, 97% 12%, 100% 0); transform: rotate(var(--tr, -3deg)); transform-origin: 0 50%; transition: transform 0.3s cubic-bezier(0.3, 1.5, 0.5, 1); -webkit-tap-highlight-color: transparent; }
+.pin:nth-child(even) { --tr: 3deg; }
+.tape:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+.pin::after { content: none; }
+@media (hover: hover) {
+  .pin:hover .tape { transform: translateY(-5px) rotate(calc(var(--tr, -3deg) + 9deg)); }
+  .pin:hover { transform-origin: 50% 0; transform: rotate(0) scale(1.02); box-shadow: var(--lift); }
+}
+.wiggle .tape { animation: tape-wiggle 0.45s ease; }
+.fall .tape { animation: tape-off 1s cubic-bezier(0.4, 0, 0.9, 0.6) forwards; }
+.back .tape { animation: tape-on 0.55s 0.15s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+@keyframes tape-wiggle { 30% { transform: translateY(-4px) rotate(calc(var(--tr, -3deg) + 8deg)); } 60% { transform: rotate(calc(var(--tr, -3deg) - 4deg)); } }
+@keyframes tape-off { 0% { transform: rotate(var(--tr, -3deg)); } 16% { transform: translateY(-16px) rotate(24deg); } 100% { transform: translate(70px, 100vh) rotate(150deg); } }
+@keyframes tape-on { from { transform: translateY(-28px) rotate(20deg); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .tape, .wiggle .tape, .fall .tape, .back .tape { animation: none; transition: none; } }

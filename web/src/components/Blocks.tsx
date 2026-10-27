@@ -185,9 +185,17 @@ export function Clippings({ items }: { items: Doc[] }) {
         const img = media(c.image)
         return (
           <li className="clip" key={c.id}>
+            <Tack />
             <a className="main" href={c.url} target="_blank" rel="noopener noreferrer">
               {img && <img src={img} alt="" loading="lazy" />}
-              <b>{c.outlet}</b>
+              <div className="mast">
+                <b>{c.outlet}</b>
+                {c.date && (
+                  <time dateTime={String(c.date).slice(0, 10)}>
+                    {new Date(c.date).toLocaleDateString('en-IE', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </time>
+                )}
+              </div>
               <span>{c.title}</span>
             </a>
             {safeUrl(c.archiveUrl) && (
@@ -216,12 +224,28 @@ export function TimelineCard({ item }: { item: Doc }) {
 
 export type Photo = { src: string; alt: string; caption?: string }
 // layout comes from the CMS (Site settings > Photo gallery layout)
+
+// a plain red push-pin (3D render, public/pin.png). Press it twice and the paper falls and opens (see PinFun).
+// the old yellow tape, for the gallery photos. Same double press as the pin.
+export function Tape() {
+  return <button type="button" className="tape" aria-label="Taped up. Press twice to take it down and open it." />
+}
+
+export function Tack() {
+  return (
+    <button type="button" className="tack" aria-label="Pinned. Press twice to take it down and open it.">
+      <img src="/pin.png" alt="" width={49} height={51} draggable={false} />
+    </button>
+  )
+}
+
 export function Gallery({ photos, layout = 'collage' }: { photos: Photo[]; layout?: string }) {
   const known = ['collage', 'grid', 'featured', 'strip'].includes(layout) ? layout : 'collage'
   return (
     <div className={`gal ${known === 'collage' ? 'wall' : known}`}>
       {photos.map((p, i) => (
         <figure className="pin" key={i}>
+          <Tape />
           <span className="im">
             <img src={p.src} alt={p.alt} loading="lazy" />
           </span>

@@ -1,3 +1,4 @@
+import PinFun from '@/components/PinFun'
 import type { Metadata, Viewport } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -127,6 +128,7 @@ export default async function Layout({
         <Header locale={locale} donateOpen={Boolean(s.donate?.open)} />
         <main id="main">{children}</main>
         <Footer locale={locale} settings={s} />
+        <PinFun />
       </body>
     </html>
   )

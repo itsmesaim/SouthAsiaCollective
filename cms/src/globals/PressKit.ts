@@ -20,6 +20,16 @@ export const PressKit: GlobalConfig = {
       admin: { description: 'A short paragraph about the group that can be copied as is.' },
     },
     {
+      name: 'groupPhoto',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Group photo',
+      admin: {
+        description:
+          'The photo of us shown in "The basics" on the press kit page. Leave empty to use a default group photo.',
+      },
+    },
+    {
       name: 'facts',
       type: 'array',
       labels: { singular: 'Fact', plural: 'Facts' },

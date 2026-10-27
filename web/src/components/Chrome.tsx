@@ -11,7 +11,7 @@ export function Header({ locale, donateOpen }: { locale: Locale; donateOpen: boo
     <header className="top">
       <div className="w">
         <Link className="brand" href={`/${locale}`} aria-label="South Asia Collective">
-          <img className="logo" src="/logo.png" alt="" width={52} height={52} />
+          <img className="logo" src="/logo-dark.png" alt="" width={52} height={52} />
           <span>SouthAsiaCollective.ie</span>
         </Link>
         <Nav
@@ -24,7 +24,11 @@ export function Header({ locale, donateOpen }: { locale: Locale; donateOpen: boo
             { href: `/${locale}/events`, label: t.events },
             { href: `/${locale}/in-the-news`, label: t.news },
             // blogs, statements and our short updates all live under Blog
-            { href: `/${locale}/blog`, label: t.blog, match: [`/${locale}/blog`, `/${locale}/statements`, `/${locale}/news`] },
+            {
+              href: `/${locale}/blog`,
+              label: t.blog,
+              match: [`/${locale}/blog`, `/${locale}/statements`, `/${locale}/news`],
+            },
             { href: `/${locale}/gallery`, label: t.gallery },
           ]}
           join={{ href: `/${locale}#join`, label: t.join }}
@@ -44,7 +48,7 @@ export function Footer({ locale, settings }: { locale: Locale; settings: Doc }) 
       <footer className="bottom">
         <div className="w">
           <div>
-            <img src="/logo.png" alt="" width={64} height={64} />
+            <img src="/logo-dark.png" alt="" width={64} height={64} />
             <p>© South Asia Collective, Dublin, Ireland</p>
             <p>
               <a href={`mailto:${email}`}>{email}</a>
